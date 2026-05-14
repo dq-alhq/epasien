@@ -154,8 +154,8 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
                             $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
                             $defaultPhoto = "assets/images/avatar.png";
 
-                            $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
-                                ? $_SESSION["host_url"] . "/webapps/penggajian/$photoName"
+                            $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/" . $photoName) )
+                                ? $_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/$photoName"
                                 : $defaultPhoto;
                             ?>
                             <tr>
