@@ -90,7 +90,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                         $defaultPhoto = "assets/images/avatar.png";
 
                                         $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
-                                            ? "/webapps/penggajian/$photoName"
+                                            ? $_SESSION["host_url"] . "/webapps/penggajian/$photoName"
                                             : $defaultPhoto;
                                         ?>
                                         <tr>

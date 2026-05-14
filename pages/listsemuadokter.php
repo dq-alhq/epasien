@@ -13,7 +13,7 @@ visitor_section_open();
         $defaultPhoto = "assets/images/avatar.png";
 
         $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
-            ? "/webapps/penggajian/$photoName"
+            ? $_SESSION["host_url"] . "/webapps/penggajian/$photoName"
             : $defaultPhoto; ?>
         <article class="surface-card p-5">
             <div class="flex gap-4">

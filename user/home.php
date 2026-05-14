@@ -155,7 +155,7 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
                             $defaultPhoto = "assets/images/avatar.png";
 
                             $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
-                                ? "/webapps/penggajian/$photoName"
+                                ? $_SESSION["host_url"] . "/webapps/penggajian/$photoName"
                                 : $defaultPhoto;
                             ?>
                             <tr>

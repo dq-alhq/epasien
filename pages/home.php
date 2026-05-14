@@ -88,7 +88,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                 $photoName !== '' &&
                 file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName)
             )
-                ? "/webapps/penggajian/$photoName"
+                ? $_SESSION["host_url"] . "/webapps/penggajian/$photoName"
                 : $defaultPhoto;
             ?>
             <article class="surface-card p-5">
