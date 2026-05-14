@@ -1,0 +1,170 @@
+<?php
+if (strpos($_SERVER['REQUEST_URI'], "pages")) exit(header("Location:../index.php"));
+
+$json = trim((string)($_GET['iyem'] ?? ''));
+$json = json_decode(encrypt_decrypt($json, "d"), true);
+if (isset($json["kd_dokter"])) {
+    $kd_dokter = validTeks($json["kd_dokter"]);
+    $kd_poli = validTeks($json["kd_poli"]);
+    $tanggal = validTeks($json["tanggal"]);
+    $kd_pj = validTeks($json["kd_pj"]);
+    $status = validTeks($json["status"]);
+    $no_reg = validTeks($json["no_reg"]);
+    $sekarang = date("Y-m-d");
+    $interval = getOne2("select (TO_DAYS('$tanggal')-TO_DAYS('$sekarang'))");
+    if ($status == "batal") {
+        $update = Hapus2("booking_registrasi", "no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_periksa='$tanggal' and kd_dokter='$kd_dokter' and kd_poli='$kd_poli' and kd_pj='$kd_pj'");
+        if ($update) { ?>
+            <div class="text-center mb-3">
+                <h5 class="menu-header-title mb-3"><strong>PEMBATALAN BOOKING BERHASIL</strong></h5>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body">
+                        <p>Booking Registrasi anda telah dibatalkan</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                           class="btn btn-danger btn-transition">Kembali</a>
+                    </div>
+                </div>
+            </div>
+            <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 7);
+        } else { ?>
+            <div class="text-center mb-3">
+                <h5 class="menu-header-title mb-3"><strong>PEMBATALAN BOOKING GAGAL</strong></h5>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body">
+                        <p>Terjadi kesalahan, silahkan kontak admin</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                           class="btn btn-danger btn-transition">Kembali</a>
+                    </div>
+                </div>
+            </div>
+            <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 4);
+        }
+    } else {
+        if ($interval < 0) { ?>
+            <div class="text-center mb-3">
+                <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body">
+                        <p>Booking Anda sudah kadaluarsa</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                           class="btn btn-danger btn-transition">Kembali</a>
+                    </div>
+                </div>
+            </div>
+            <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 5);
+        } else if ($interval > 1) { ?>
+            <div class="text-center mb-3">
+                <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body">
+                        <p>Cekin hanya bisa dilakukan 24 jam sebelum pemeriksaan</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                           class="btn btn-danger btn-transition">Kembali</a>
+                    </div>
+                </div>
+            </div>
+            <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 7);
+        } else {
+            Ubah2("pasien", "umur=CONCAT(CONCAT(CONCAT(TIMESTAMPDIFF(YEAR, tgl_lahir, CURDATE()), ' Th '),CONCAT(TIMESTAMPDIFF(MONTH, tgl_lahir, CURDATE()) - ((TIMESTAMPDIFF(MONTH, tgl_lahir, CURDATE()) div 12) * 12), ' Bl ')),CONCAT(TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(tgl_lahir,INTERVAL TIMESTAMPDIFF(YEAR, tgl_lahir, CURDATE()) YEAR), INTERVAL TIMESTAMPDIFF(MONTH, tgl_lahir, CURDATE()) - ((TIMESTAMPDIFF(MONTH, tgl_lahir, CURDATE()) div 12) * 12) MONTH), CURDATE()), ' Hr')) where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "'");
+            $statuspoli = getOne2("select if((select count(no_rkm_medis) from reg_periksa where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and kd_poli='$kd_poli')>0,'Lama','Baru' )");
+            $max = getOne2("select ifnull(MAX(CONVERT(RIGHT(no_rawat,6),signed)),0)+1 from reg_periksa where tgl_registrasi='$tanggal'");
+            $no_rawat = str_replace("-", "/", $tanggal . "/") . sprintf("%06s", $max);
+            $sttsumur = "Th";
+            $umur = 0;
+            $querypasien = bukaquery2("select no_rkm_medis,namakeluarga,alamatpj,kelurahanpj,kecamatanpj,kabupatenpj,propinsipj,keluarga,TIMESTAMPDIFF(YEAR, pasien.tgl_lahir, CURDATE()) as tahun,(TIMESTAMPDIFF(MONTH, pasien.tgl_lahir, CURDATE()) - ((TIMESTAMPDIFF(MONTH, pasien.tgl_lahir, CURDATE()) div 12) * 12)) as bulan,
+                                          TIMESTAMPDIFF(DAY, DATE_ADD(DATE_ADD(pasien.tgl_lahir,INTERVAL TIMESTAMPDIFF(YEAR, pasien.tgl_lahir, CURDATE()) YEAR), INTERVAL TIMESTAMPDIFF(MONTH, pasien.tgl_lahir, CURDATE()) - ((TIMESTAMPDIFF(MONTH, pasien.tgl_lahir, CURDATE()) div 12) * 12) MONTH), CURDATE()) as hari,tgl_daftar
+                                          from pasien where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' ");
+            if ($rsquerypasien = mysqli_fetch_array($querypasien)) {
+                if ($rsquerypasien["tahun"] > 0) {
+                    $umur = $rsquerypasien["tahun"];
+                    $sttsumur = "Th";
+                } else if ($rsquerypasien["tahun"] == 0) {
+                    if ($rsquerypasien["bulan"] > 0) {
+                        $umur = $rsquerypasien["bulan"];
+                        $sttsumur = "Bl";
+                    } else if ($rsquerypasien["bulan"] == 0) {
+                        $umur = $rsquerypasien["hari"];
+                        $sttsumur = "Hr";
+                    }
+                }
+
+                $biayareg = 0;
+                if ($rsquerypasien["tgl_daftar"] == $tanggal) {
+                    $biayareg = getOne2("select registrasi from poliklinik where kd_poli='$kd_poli'");
+                } else {
+                    getOne2("select registrasilama from poliklinik where kd_poli='$kd_poli'");
+                }
+                $insert = Tambah4("reg_periksa", "'$no_reg','$no_rawat','$tanggal',current_time(),'$kd_dokter','" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "','$kd_poli','" . $rsquerypasien["namakeluarga"] . "','" . $rsquerypasien["alamatpj"] . "','" . $rsquerypasien["keluarga"] . "','" . $biayareg . "','Belum','Lama','Ralan','$kd_pj','$umur','$sttsumur','Belum Bayar','$statuspoli'");
+                if ($insert) {
+                    Ubah3("skdp_bpjs", "status='Sudah Periksa' where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_datang='$tanggal'");
+                    Ubah3("booking_registrasi", "status='Terdaftar' where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_periksa='$tanggal' and kd_dokter='$kd_dokter' and kd_poli='$kd_poli' and kd_pj='$kd_pj'"); ?>
+                    <div class="text-center mb-3">
+                        <h5 class="menu-header-title mb-3"><strong>BERHASIL CHECK-IN</strong></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-body">
+                                <p>Silahkan tunjukkan bukti registerasi/pendaftaran kepada petugas kami jika
+                                    dibutuhkan</p>
+                                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                                   class="btn btn-danger btn-transition">Kembali</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 7);
+                } else {
+                    ?>
+                    <div class="text-center mb-3">
+                        <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-body">
+                                <p>Terjadi kesalahan, silahkan kontak admin</p>
+                                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                                   class="btn btn-danger btn-transition">Kembali</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 4);
+                }
+            } else { ?>
+                <div class="text-center mb-3">
+                    <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-body">
+                            <p>Pasien tidak ditemukan</p>
+                            <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                               class="btn btn-danger btn-transition">Kembali</a>
+                        </div>
+                    </div>
+                </div>
+                <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 5);
+            }
+        }
+    }
+} else { ?>
+    <div class="text-center mb-3">
+        <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <p>Kami tidak menemukan data booking anda</p>
+                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                   class="btn btn-danger btn-transition">Kembali</a>
+            </div>
+        </div>
+    </div>
+    <?php JSRedirect2("index.php?act=BookingRegistrasi&hal=Booking", 5);
+} ?>

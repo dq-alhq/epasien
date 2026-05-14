@@ -1,0 +1,11 @@
+{
+  "name": "epasien",
+  "private": true,
+  "scripts": {
+    "dev": "tailwindcss -i ./resources/css/app.css -o ./assets/css/app.css --watch",
+    "build": "tailwindcss -i ./resources/css/app.css -o ./assets/css/app.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
