@@ -3,16 +3,16 @@ if (strpos($_SERVER['REQUEST_URI'], "conf")) {
     exit(header("Location:../index.php"));
 }
 
-	$db_hostname    = "192.168.0.88";
-    $db_username    = "sik";
-    $db_password    = "mabarr0tsikdb";
-    $db_name        = "sik";
-    define('URUTNOREG', 'dokter + poli'); // dokter / poli / dokter + poli
-    $month          = date('Y-m');
-    $date           = date('Y-m-d');
-    $time           = date('H:i:s');
-    $date_time      = date('Y-m-d H:i:s');
-    $stokdarah      = "aktif";
+$db_hostname    = "localhost";
+$db_username    = "root";
+$db_password    = "";
+$db_name        = "sik";
+define('URUTNOREG', 'dokter + poli'); // dokter / poli / dokter + poli
+$month          = date('Y-m');
+$date           = date('Y-m-d');
+$time           = date('H:i:s');
+$date_time      = date('Y-m-d H:i:s');
+$stokdarah      = "aktif";
 
 function host()
 {
@@ -24,9 +24,9 @@ function bukakoneksi()
 {
     global $db_hostname, $db_username, $db_password, $db_name;
     $konektor = mysqli_connect($db_hostname, $db_username, $db_password)
-    or die("<font color=red><h3>Not Connected ..!!</h3></font>");
+        or die("<font color=red><h3>Not Connected ..!!</h3></font>");
     $db_select = mysqli_select_db($konektor, $db_name)
-    or die("<font color=red><h3>Cannot chose database..!!</h3></font>" . mysqli_error());
+        or die("<font color=red><h3>Cannot chose database..!!</h3></font>" . mysqli_error());
     return $konektor;
 }
 
@@ -265,7 +265,7 @@ function bukaquery($sql)
 {
     $konektor = bukakoneksi();
     $result = mysqli_query($konektor, $sql)
-    or die(mysqli_error($konektor) . "<br/><font color=red><b>Terjadi Kesalahan</b></font>" . JSRedirect2("index.php?act=Home", 4));
+        or die(mysqli_error($konektor) . "<br/><font color=red><b>Terjadi Kesalahan</b></font>" . JSRedirect2("index.php?act=Home", 4));
     mysqli_close($konektor);
     return $result;
 }
@@ -282,8 +282,7 @@ function bukainput($sql)
 {
     $konektor = bukakoneksi();
     $result = mysqli_query($konektor, $sql)
-    or die(/*mysqli_error().*/
-    "<br/><font color=red><b>Gagal</b>");
+        or die(/*mysqli_error().*/"<br/><font color=red><b>Gagal</b>");
     mysqli_close($konektor);
     return $result;
 }
@@ -300,7 +299,7 @@ function hapusinput($sql)
 {
     $konektor = bukakoneksi();
     $result = mysqli_query($konektor, $sql)
-    or die("<font color=red><b>Gagal</b>, Data masih dipakai di tabel lain !");
+        or die("<font color=red><b>Gagal</b>, Data masih dipakai di tabel lain !");
     mysqli_close($konektor);
     return $result;
 }

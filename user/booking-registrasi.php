@@ -88,15 +88,12 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
 
                                         $photoName = trim((string) $rsqueryjadwal["kd_dokter"]) . ".jpg";
                                         $defaultPhoto = "assets/images/avatar.png";
-
-                                        $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/" . $photoName) )
-                                            ? $_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/$photoName"
-                                            : $defaultPhoto;
-                                        ?>
+                                        $photo = photo_url . $photoName;
+                                    ?>
                                         <tr>
                                             <td>
                                                 <div class="flex gap-2 items-center h-auto">
-                                                    <img width="40" class="rounded" src="<?= e($photo); ?>" alt="Foto">
+                                                    <img width="40" class="rounded" src="<?= e($photo); ?>" alt="Foto" onerror="this.src='<?= e($defaultPhoto); ?>'">
                                                     <div class="grid gap-0 pr-5">
                                                         <span class="text-sm whitespace-nowrap font-medium">
                                                             <?= e($rsqueryjadwal["nm_poli"]); ?>
@@ -116,12 +113,12 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                                     aria-valuemax="<?= $rsqueryjadwal["kuota"]; ?>">
                                                     <div class="flex flex-col justify-center rounded-full overflow-hidden bg-red-600 text-xs text-center whitespace-nowrap transition duration-500"
                                                         style="width: <?php
-                                                        $persen = 0;
-                                                        if ($rsqueryjadwal["kuota"] > 0) {
-                                                            $persen = ($daftar / $rsqueryjadwal["kuota"]) * 100;
-                                                        }
-                                                        echo round($persen, 2);
-                                                        ?>%">
+                                                                        $persen = 0;
+                                                                        if ($rsqueryjadwal["kuota"] > 0) {
+                                                                            $persen = ($daftar / $rsqueryjadwal["kuota"]) * 100;
+                                                                        }
+                                                                        echo round($persen, 2);
+                                                                        ?>%">
                                                     </div>
                                                     <span
                                                         class="absolute left-1/2 font-bold text-xs -translate-x-1/2 text-emerald-500"><?= $daftar ?>/<?= $rsqueryjadwal["kuota"]; ?></span>
@@ -139,21 +136,21 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                                     if ($terdaftar > 0) { ?>
                                                         <button class="btn btn-primary" disabled>Terdaftar</button>
                                                     <?php } else if ($tglDipilih == $tglSekarang && $jamSekarang > $rsqueryjadwal["jam_selesai"]) { ?>
-                                                            <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
-                                                                Lewat</button>
+                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
+                                                            Lewat</button>
                                                     <?php } else if ($tglDipilih == $tglKemarin) { ?>
-                                                                <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
-                                                                    Lewat</button>
+                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
+                                                            Lewat</button>
                                                     <?php } else if ($daftar >= $rsqueryjadwal["kuota"]) { ?>
-                                                                    <button class="btn btn-danger pointer-events-none opacity-50"
-                                                                        disabled>Penuh</button>
-                                                    <?php } else {
+                                                        <button class="btn btn-danger pointer-events-none opacity-50"
+                                                            disabled>Penuh</button>
+                                                <?php } else {
                                                         echo "<a href='?act=SimpanBookingRegistrasi&iyem=" . encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryjadwal["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryjadwal["kd_poli"] . "\",\"tanggal\":\"$thncari-$blncari-$tglcari\",\"kuota\":\"" . $rsqueryjadwal["kuota"] . "\"}", "e") . "' class='btn btn-success'>Booking</a>";
                                                     }
                                                 } ?>
                                             </td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     endwhile;
                                     ?>
                                 </tbody>
@@ -194,18 +191,18 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                                         class='btn btn-danger btn-transition batalRegistrasi'>Batal</a>
                                                 </td>
                                             <?php } else if ($rsqueryriwayat["status"] == "Terdaftar") { ?>
-                                                    <td class='text-center'>
-                                                        <a href='?act=BuktiRegistrasi&iyem=<?= encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryriwayat["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryriwayat["kd_poli"] . "\",\"tanggal\":\"" . $rsqueryriwayat["tanggal_periksa"] . "\"}", "e"); ?>'
-                                                            class='btn btn-success btn-transition'>Terdaftar</a>
-                                                    </td>
+                                                <td class='text-center'>
+                                                    <a href='?act=BuktiRegistrasi&iyem=<?= encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryriwayat["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryriwayat["kd_poli"] . "\",\"tanggal\":\"" . $rsqueryriwayat["tanggal_periksa"] . "\"}", "e"); ?>'
+                                                        class='btn btn-success btn-transition'>Terdaftar</a>
+                                                </td>
                                             <?php } else { ?>
-                                                    <td class='text-center'>
-                                                        <button class='btn-secondary btn'
-                                                            disabled><?= $rsqueryriwayat["status"]; ?></button>
-                                                    </td>
-                                            <?php }
-                                    endwhile; ?>
-                                    </tr>
+                                                <td class='text-center'>
+                                                    <button class='btn-secondary btn'
+                                                        disabled><?= $rsqueryriwayat["status"]; ?></button>
+                                                </td>
+                                        <?php }
+                                        endwhile; ?>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -219,7 +216,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
 <script src="assets/plugin/moment-with-locales.js"></script>
 <script src="assets/plugin/sweetalert2.all.min.js"></script>
 <script>
-    document.addEventListener('click', function (e) {
+    document.addEventListener('click', function(e) {
         const button = e.target.closest('.batalRegistrasi');
         if (!button) {
             return;

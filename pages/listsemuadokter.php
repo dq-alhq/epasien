@@ -11,13 +11,12 @@ visitor_section_open();
     <?php while ($row = mysqli_fetch_array($querysemuadokter)):
         $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
         $defaultPhoto = "assets/images/avatar.png";
-
-        $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/" . $photoName) )
-            ? $_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/$photoName"
-            : $defaultPhoto; ?>
+        $photo = photo_url . $photoName;
+    ?>
         <article class="surface-card p-5">
             <div class="flex gap-4">
                 <img alt="Foto dokter" src="<?= e($photo); ?>"
+                    onerror="this.src='<?= e($defaultPhoto); ?>'"
                     class="size-24 rounded-3xl object-cover ring-1 ring-slate-200">
                 <div class="min-w-0">
                     <h3 class="text-sm font-bold text-slate-900"><?= e($row["dokter"]); ?></h3>

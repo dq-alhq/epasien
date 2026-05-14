@@ -72,7 +72,7 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
             $_SESSION["kd_dokter"] = $registrasi["kd_dokter"];
             $_SESSION["tgl_registrasi"] = $registrasi["tgl_registrasi"];
             $_SESSION["no_reg"] = $registrasi["no_reg"];
-            ?>
+        ?>
             <div class="dashboard-card">
                 <p class="text-xs font-semibold uppercase tracking-[0.24em] text-nu-700">Pendaftaran Hari Ini</p>
                 <h2 class="mt-2 text-2xl font-bold text-slate-900">Antrian Anda Sedang Aktif</h2>
@@ -153,15 +153,12 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
                             $persen = $row["kuota"] > 0 ? min(100, ($terdaftar / $row["kuota"]) * 100) : 0;
                             $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
                             $defaultPhoto = "assets/images/avatar.png";
-
-                            $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/" . $photoName) )
-                                ? $_SESSION["host_url"] . "/webapps/penggajian/pages/pegawai/photo/$photoName"
-                                : $defaultPhoto;
-                            ?>
+                            $photo = photo_url . $photoName;
+                        ?>
                             <tr>
                                 <td>
                                     <div class="flex gap-2 items-center h-auto">
-                                        <img width="40" class="rounded" src="<?= e($photo); ?>" alt="Foto">
+                                        <img width="40" class="rounded" src="<?= e($photo); ?>" alt="Foto" onerror="this.src='<?= e($defaultPhoto); ?>'">
                                         <div class="grid gap-0 pr-5">
                                             <span class="text-sm whitespace-nowrap font-medium">
                                                 <?= e($row["nm_poli"]); ?>
@@ -241,7 +238,7 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
 
 <script src="assets/plugin/count-to.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         function loadQueue() {
             $("#screen").load("pages/daftarantrian.php");
         }
