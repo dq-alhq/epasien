@@ -81,21 +81,17 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $queryjadwal = bukaquery("Select dokter.nm_dokter,poliklinik.nm_poli,jadwal.jam_mulai,jadwal.jam_selesai,poliklinik.kd_poli,jadwal.kuota,dokter.kd_dokter,pegawai.photo from jadwal inner join dokter on dokter.kd_dokter=jadwal.kd_dokter inner join poliklinik on jadwal.kd_poli=poliklinik.kd_poli inner join pegawai on dokter.kd_dokter=pegawai.nik where jadwal.hari_kerja like '%" . konversiHari($hari) . "%'");
+                                    $queryjadwal = bukaquery("Select dokter.nm_dokter,poliklinik.nm_poli,jadwal.jam_mulai,jadwal.jam_selesai,poliklinik.kd_poli,jadwal.kuota,dokter.kd_dokter from jadwal inner join dokter on dokter.kd_dokter=jadwal.kd_dokter inner join poliklinik on jadwal.kd_poli=poliklinik.kd_poli inner join pegawai on dokter.kd_dokter=pegawai.nik where jadwal.hari_kerja like '%" . konversiHari($hari) . "%'");
                                     while ($rsqueryjadwal = mysqli_fetch_array($queryjadwal)):
                                         $daftar = getOne("select count(no_rkm_medis) from booking_registrasi where tanggal_periksa='$thncari-$blncari-$tglcari' and kd_dokter='" . $rsqueryjadwal["kd_dokter"] . "' and kd_poli='" . $rsqueryjadwal["kd_poli"] . "'");
                                         $terdaftar = getOne("select count(no_rkm_medis) from booking_registrasi where tanggal_periksa='$thncari-$blncari-$tglcari' and kd_dokter='" . $rsqueryjadwal["kd_dokter"] . "' and kd_poli='" . $rsqueryjadwal["kd_poli"] . "' and no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "'");
 
-                                        $photoName = trim((string) $rsqueryjadwal["photo"]);
+                                        $photoName = trim((string) $rsqueryjadwal["kd_dokter"]) . ".jpg";
                                         $defaultPhoto = "assets/images/avatar.png";
 
-                                        $photo = (
-                                            $photoName !== '' &&
-                                            file_exists($_SERVER['DOCUMENT_ROOT'] . "/webapps/penggajian/" . $photoName)
-                                        )
+                                        $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
                                             ? "/webapps/penggajian/$photoName"
                                             : $defaultPhoto;
-
                                         ?>
                                         <tr>
                                             <td>

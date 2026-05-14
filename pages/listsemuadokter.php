@@ -9,13 +9,10 @@ visitor_section_open();
 ?>
 <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
     <?php while ($row = mysqli_fetch_array($querysemuadokter)):
-        $photoName = trim((string) $row["photo"]);
+        $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
         $defaultPhoto = "assets/images/avatar.png";
 
-        $photo = (
-            $photoName !== '' &&
-            file_exists($_SERVER['DOCUMENT_ROOT'] . "/webapps/penggajian/" . $photoName)
-        )
+        $photo = ( $photoName !== '' && file_exists($_SESSION["host_url"] . "/webapps/penggajian/" . $photoName) )
             ? "/webapps/penggajian/$photoName"
             : $defaultPhoto; ?>
         <article class="surface-card p-5">

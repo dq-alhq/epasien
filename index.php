@@ -22,6 +22,7 @@ if (!isset($_SESSION["nama_instansi"])) {
         $_SESSION["kode_ppk"] = $pengaturan["kode_ppk"];
         $_SESSION["kode_ppkinhealth"] = $pengaturan["kode_ppkinhealth"];
         $_SESSION["kode_ppkkemenkes"] = $pengaturan["kode_ppkkemenkes"];
+        $_SESSION["host_url"] = "https://rsimabarrotnu.rumah-sakit.online";
     }
 }
 
