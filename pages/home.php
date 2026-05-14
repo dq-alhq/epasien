@@ -8,7 +8,6 @@ $kabupaten = $_SESSION["kabupaten"] ?? '';
 $alamat = $_SESSION["alamat_instansi"] ?? '';
 $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
 ?>
-
 <section class="relative overflow-hidden">
     <div
         class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_rgba(18,130,75,0.12),_transparent_34%),linear-gradient(135deg,_rgba(255,255,255,0.96),_rgba(220,252,231,0.94))]">
@@ -33,38 +32,29 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
 
         <div class="surface-card relative overflow-hidden p-8">
             <div class="absolute right-0 top-0 h-40 w-40 rounded-full bg-nu-100 blur-3xl"></div>
-            <div class="relative">
-                <div class="flex items-center gap-4">
-                    <img src="assets/images/author-image.jpg" class="size-20 rounded-3xl object-cover ring-4 ring-white"
-                        alt="Direktur">
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-nu-700">Direktur</p>
-                        <h2 class="mt-1 text-lg font-bold text-slate-900">dr. Izzuddin Syahbana, M.K.M</h2>
-                    </div>
-                </div>
-                <p class="mt-6 font-bold leading-7 text-slate-600">
-                    Melayani Setulus Hati
-                </p>
-                <p class="mt-2 text-sm leading-7 text-slate-600">
-                    kami hadirkan melalui pelayanan yang tertata, responsif, dan mudah diakses
-                    oleh pasien serta keluarga.
-                </p>
-                <div class="mt-8 grid gap-4 sm:grid-cols-2">
-                    <div class="rounded-3xl bg-slate-50 p-5">
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Nilai</p>
-                        <p class="mt-2 text-sm font-medium text-slate-800">Amanah, profesional, dan penuh kepedulian.
-                        </p>
-                    </div>
-                    <div class="rounded-3xl bg-nu-50 p-5">
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-nu-700">Fokus</p>
-                        <p class="mt-2 text-sm font-medium text-slate-800">Pelayanan pasien yang cepat dan terarah.</p>
+            <div class="relative flex gap-0">
+                <div class="relative">
+                    <p class="font-bold leading-7 text-xl text-slate-600">
+                        Melayani Setulus Hati
+                    </p>
+                    <div class="max-w-72 grid gap-4 mt-4">
+                        <div class="rounded-3xl bg-slate-50 p-5">
+                            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Nilai</p>
+                            <p class="mt-2 text-sm font-medium text-slate-800">Amanah, profesional, dan penuh kepedulian.
+                            </p>
+                        </div>
+                        <div class="rounded-3xl bg-nu-50 max-w-56 lg:max-w-none p-5">
+                            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-nu-700">Fokus</p>
+                            <p class="mt-2 text-sm font-medium text-slate-800">Pelayanan pasien yang cepat dan terarah.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <img src="assets/images/direktur-half.png" alt="Direktur" class="absolute shrink-0 bottom-0 object-cover w-44 h-auto right-0">
         </div>
     </div>
-</section>
 
+</section>
 <section id="team" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
     <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -79,11 +69,18 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
 
     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <?php
-        $querydokter = bukaquery("select dokter.kd_dokter,left(dokter.nm_dokter,36) as dokter,spesialis.nm_sps,dokter.no_ijn_praktek,pegawai.photo from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps inner join pegawai on dokter.kd_dokter=pegawai.nik where dokter.status='1' and dokter.kd_dokter<>'-' and dokter.no_ijn_praktek<>'-' and dokter.no_ijn_praktek<>'' and spesialis.nm_sps NOT LIKE '%Umum%' and spesialis.nm_sps<>'Perawat' order by spesialis.nm_sps limit 6");
+        $querydokter = bukaquery("select dokter.kd_dokter,dokter.nm_dokter as dokter,spesialis.nm_sps,dokter.no_ijn_praktek,pegawai.photo from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps inner join pegawai on dokter.kd_dokter=pegawai.nik where dokter.status='1' and dokter.kd_dokter<>'-' and dokter.no_ijn_praktek<>'-' and dokter.no_ijn_praktek<>'' and spesialis.nm_sps NOT LIKE '%Umum%' and spesialis.nm_sps<>'Perawat' order by spesialis.nm_sps limit 6");
         while ($rsquerydokter = mysqli_fetch_array($querydokter)):
             $photoName = trim((string) $rsquerydokter["kd_dokter"]) . ".jpg";
             $defaultPhoto = "assets/images/avatar.png";
             $photo = photo_url . $photoName;
+            $nama_dokter = preg_replace_callback(
+                '/^(dr\.\s*)([^,]+)(.*)$/i',
+                function ($match) {
+                    return $match[1] . ucwords(strtolower($match[2])) . $match[3];
+                },
+                $nama_dokter = $rsquerydokter["dokter"]
+            );
         ?>
             <article class="surface-card p-5">
                 <div class="flex items-start gap-4">
@@ -91,7 +88,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                         onerror="this.src='<?= e($defaultPhoto); ?>'"
                         class="size-24 rounded-3xl object-cover ring-1 ring-slate-200">
                     <div class="min-w-0">
-                        <h3 class="text-sm font-bold text-slate-900"><?= e($rsquerydokter["dokter"]); ?></h3>
+                        <h3 class="text-sm font-bold text-slate-900"><?= e($nama_dokter); ?></h3>
                         <p class="mt-1 text-sm text-slate-600"><?= e($rsquerydokter["nm_sps"]); ?></p>
                         <div class="mt-2 inline-flex rounded-full text-xs font-semibold text-nu-700">
                             SIP: <?= e($rsquerydokter["no_ijn_praktek"]); ?>
