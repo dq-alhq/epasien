@@ -166,6 +166,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                     <tr>
                                         <th class="text-center">Tgl. Booking</th>
                                         <th class="text-center">Tgl. Periksa</th>
+                                        <th class="text-center">Nama Pasien</th>
                                         <th class="text-center">Dokter</th>
                                         <th class="text-center">Poli</th>
                                         <th class="text-center">No</th>
@@ -174,13 +175,39 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $queryriwayat = bukaquery("select booking_registrasi.tanggal_booking,booking_registrasi.jam_booking,booking_registrasi.tanggal_periksa,booking_registrasi.kd_dokter,dokter.nm_dokter,booking_registrasi.kd_poli,poliklinik.nm_poli,booking_registrasi.no_reg,booking_registrasi.kd_pj,penjab.png_jawab,booking_registrasi.status from booking_registrasi inner join dokter on booking_registrasi.kd_dokter=dokter.kd_dokter inner join poliklinik on booking_registrasi.kd_poli=poliklinik.kd_poli inner join penjab on booking_registrasi.kd_pj=penjab.kd_pj where booking_registrasi.no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' order by booking_registrasi.tanggal_periksa desc");
+                                    $queryriwayat = bukaquery("
+                                        SELECT 
+                                            booking_registrasi.tanggal_booking,
+                                            booking_registrasi.jam_booking,
+                                            booking_registrasi.tanggal_periksa,
+                                            booking_registrasi.kd_dokter,
+                                            dokter.nm_dokter,
+                                            booking_registrasi.kd_poli,
+                                            poliklinik.nm_poli,
+                                            booking_registrasi.no_reg,
+                                            booking_registrasi.kd_pj,
+                                            penjab.png_jawab,
+                                            booking_registrasi.status,
+                                            pasien.nm_pasien
+                                        FROM booking_registrasi
+                                        INNER JOIN dokter 
+                                            ON booking_registrasi.kd_dokter = dokter.kd_dokter
+                                        INNER JOIN poliklinik 
+                                            ON booking_registrasi.kd_poli = poliklinik.kd_poli
+                                        INNER JOIN penjab 
+                                            ON booking_registrasi.kd_pj = penjab.kd_pj
+                                        INNER JOIN pasien 
+                                            ON booking_registrasi.no_rkm_medis = pasien.no_rkm_medis
+                                        WHERE booking_registrasi.no_rkm_medis = '" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "'
+                                        ORDER BY booking_registrasi.tanggal_periksa DESC
+                                    ");
                                     while ($rsqueryriwayat = mysqli_fetch_array($queryriwayat)): ?>
                                         <tr>
                                             <td class="text-center"><?= $rsqueryriwayat["tanggal_booking"]; ?>
                                                 <?= $rsqueryriwayat["jam_booking"]; ?>
                                             </td>
                                             <td class="text-center"><?= $rsqueryriwayat["tanggal_periksa"]; ?></td>
+                                            <td class="text-left"><?= $rsqueryriwayat["nm_pasien"]; ?></td>
                                             <td class="text-left"><?= $rsqueryriwayat["nm_dokter"]; ?></td>
                                             <td class="text-left"><?= $rsqueryriwayat["nm_poli"]; ?></td>
                                             <td class="text-center"><?= $rsqueryriwayat["no_reg"]; ?></td>
