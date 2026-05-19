@@ -58,7 +58,7 @@ if (isset($_SESSION["ses_pasien"])) {
                 </div>
             </main>
 
-            <?php include_once "layouts/footer.php"; ?>
+            <!-- <?php include_once "layouts/footer.php"; ?> -->
         </div>
     </div>
 
@@ -67,9 +67,9 @@ if (isset($_SESSION["ses_pasien"])) {
     <script type="text/javascript" src="assets/dashboard/main.js"></script>
     <?php include_once "layouts/scripts.php"; ?>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('[data-target]').forEach(function (tabTrigger) {
-                tabTrigger.addEventListener('click', function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[data-target]').forEach(function(tabTrigger) {
+                tabTrigger.addEventListener('click', function() {
                     var targetSelector = tabTrigger.getAttribute('data-target');
                     if (!targetSelector) {
                         return;
@@ -77,14 +77,14 @@ if (isset($_SESSION["ses_pasien"])) {
 
                     var nav = tabTrigger.closest('.nav');
                     if (nav) {
-                        nav.querySelectorAll('.nav-link').forEach(function (link) {
+                        nav.querySelectorAll('.nav-link').forEach(function(link) {
                             link.classList.remove('active');
                         });
                     }
 
                     var contentRoot = tabTrigger.closest('.card, .dashboard-card, .dashboard-surface, body');
                     if (contentRoot) {
-                        contentRoot.querySelectorAll('.tab-pane').forEach(function (pane) {
+                        contentRoot.querySelectorAll('.tab-pane').forEach(function(pane) {
                             pane.classList.remove('active');
                         });
                     }

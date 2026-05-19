@@ -167,9 +167,8 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                         <th class="text-center">Tgl. Booking</th>
                                         <th class="text-center">Tgl. Periksa</th>
                                         <th class="text-center">Nama Pasien</th>
-                                        <th class="text-center">Dokter</th>
-                                        <th class="text-center">Poli</th>
-                                        <th class="text-center">No</th>
+                                        <th class="text-center">Poli/Dokter</th>
+                                        <th class="text-center">No. Reg</th>
                                         <th class="text-center">Status</th>
                                     </tr>
                                 </thead>
@@ -178,6 +177,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                     $queryriwayat = bukaquery("
                                         SELECT 
                                             booking_registrasi.tanggal_booking,
+                                            booking_registrasi.no_rkm_medis,
                                             booking_registrasi.jam_booking,
                                             booking_registrasi.tanggal_periksa,
                                             booking_registrasi.kd_dokter,
@@ -203,13 +203,34 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                     ");
                                     while ($rsqueryriwayat = mysqli_fetch_array($queryriwayat)): ?>
                                         <tr>
-                                            <td class="text-center"><?= $rsqueryriwayat["tanggal_booking"]; ?>
+                                            <td class="text-center">
+                                                <button type="button"
+                                                    class="cetak_reg rounded border px-2 py-1 mr-2 bg-emerald-600 text-white transition hover:bg-emerald-700 active:translate-y-px active:bg-emerald-800"
+                                                    data-booking="<?= e($rsqueryriwayat["tanggal_booking"]); ?>"
+                                                    data-booking-time="<?= e($rsqueryriwayat["jam_booking"]); ?>"
+                                                    data-periksa="<?= e($rsqueryriwayat["tanggal_periksa"]); ?>"
+                                                    data-pasien="<?= e($rsqueryriwayat["nm_pasien"]); ?>"
+                                                    data-norm="<?= e($rsqueryriwayat["no_rkm_medis"]); ?>"
+                                                    data-poli="<?= e($rsqueryriwayat["nm_poli"]); ?>"
+                                                    data-dokter="<?= e($rsqueryriwayat["nm_dokter"]); ?>"
+                                                    data-noreg="<?= e($rsqueryriwayat["no_reg"]); ?>"
+                                                    data-status="<?= e($rsqueryriwayat["status"]); ?>"><i class="fas fa-print"></i></button>
+                                                <?= $rsqueryriwayat["tanggal_booking"]; ?>
                                                 <?= $rsqueryriwayat["jam_booking"]; ?>
                                             </td>
                                             <td class="text-center"><?= $rsqueryriwayat["tanggal_periksa"]; ?></td>
-                                            <td class="text-left"><?= $rsqueryriwayat["nm_pasien"]; ?></td>
-                                            <td class="text-left"><?= $rsqueryriwayat["nm_dokter"]; ?></td>
-                                            <td class="text-left"><?= $rsqueryriwayat["nm_poli"]; ?></td>
+                                            <td class="text-left">
+                                                <div class="flex flex-col">
+                                                    <span class="font-semibold">No. RM: <?= $rsqueryriwayat["no_rkm_medis"]; ?></span>
+                                                    <span><?= $rsqueryriwayat["nm_pasien"]; ?></span>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="flex flex-col">
+                                                    <span class="font-semibold"><?= $rsqueryriwayat["nm_poli"]; ?></span>
+                                                    <span><?= $rsqueryriwayat["nm_dokter"]; ?></span>
+                                                </div>
+                                            </td>
                                             <td class="text-center"><?= $rsqueryriwayat["no_reg"]; ?></td>
                                             <?php if ($rsqueryriwayat["status"] == "Belum") { ?>
                                                 <td class='text-center'>
@@ -286,5 +307,139 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                 button.textContent = originalText;
             }
         });
+    });
+</script>
+
+<div id="ticketModal" class="fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-2xl border border-slate-200 bg-white shadow-2xl">
+        <div class="flex flex-col gap-4 rounded-b-[28px] bg-gradient-to-r from-emerald-600 via-slate-800 to-slate-900 px-6 py-5 text-white sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-xs uppercase font-bold text-slate-200">Tiket Pendaftaran</p>
+                <h3 class="mt-2 text-xl font-semibold">Booking Registrasi</h3>
+            </div>
+        </div>
+        <div class="px-6 py-6">
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Nama Pasien</p>
+                    <p id="ticketPasien" class="mt-2 text-lg font-semibold text-slate-900"></p>
+                </div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">No. RM</p>
+                    <p id="ticketNoRM" class="mt-2 text-lg font-semibold text-slate-900"></p>
+                </div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Poliklinik / Dokter</p>
+                    <p id="ticketPoli" class="mt-2 text-base font-semibold text-slate-900"></p>
+                    <p id="ticketDokter" class="mt-1 text-sm text-slate-600"></p>
+                </div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">No. Registrasi</p>
+                    <p id="ticketNoReg" class="mt-4 text-3xl font-mono font-semibold text-emerald-700"></p>
+                </div>
+            </div>
+            <div class="mt-6 grid gap-4 rounded-[30px] border border-slate-200 bg-slate-100 p-5">
+                <div class="grid gap-2 sm:grid-cols-2">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Booking</p>
+                        <p id="ticketBooking" class="mt-2 text-base font-semibold text-slate-900"></p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Jam Booking</p>
+                        <p id="ticketBookingTime" class="mt-2 text-base font-semibold text-slate-900"></p>
+                    </div>
+                </div>
+                <div class="grid gap-2 sm:grid-cols-2">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Periksa</p>
+                        <p id="ticketPeriksa" class="mt-2 text-base font-semibold text-slate-900"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:justify-end sm:items-center">
+            <button type="button" class="modal-close btn rounded-full border border-slate-300 bg-slate-100 px-4 py-2 text-slate-700 transition hover:bg-slate-200">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #ticketModal,
+        #ticketModal * {
+            visibility: visible;
+        }
+
+        #ticketModal {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            padding: 0.5rem;
+        }
+
+        #ticketModal>div {
+            box-shadow: none;
+            border: none;
+        }
+    }
+</style>
+
+<script>
+    function openTicketModal(data) {
+        const modal = document.getElementById('ticketModal');
+        if (!modal) return;
+
+        document.getElementById('ticketPasien').textContent = data.pasien || '-';
+        document.getElementById('ticketNoRM').textContent = data.norm || '-';
+        document.getElementById('ticketPoli').textContent = data.poli || '-';
+        document.getElementById('ticketDokter').textContent = data.dokter ? 'Dr. ' + data.dokter : '-';
+        document.getElementById('ticketBooking').textContent = data.booking || '-';
+        document.getElementById('ticketBookingTime').textContent = data.bookingTime || '-';
+        document.getElementById('ticketPeriksa').textContent = data.periksa || '-';
+        document.getElementById('ticketNoReg').textContent = data.noreg || '-';
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeTicketModal() {
+        const modal = document.getElementById('ticketModal');
+        if (!modal) return;
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+        const button = event.target.closest('.cetak_reg');
+        if (button) {
+            event.preventDefault();
+            openTicketModal({
+                booking: button.dataset.booking,
+                bookingTime: button.dataset.bookingTime,
+                periksa: button.dataset.periksa,
+                pasien: button.dataset.pasien,
+                norm: button.dataset.norm,
+                poli: button.dataset.poli,
+                dokter: button.dataset.dokter,
+                noreg: button.dataset.noreg,
+                status: button.dataset.status,
+            });
+        }
+    });
+
+    document.querySelectorAll('.modal-close').forEach(function(button) {
+        button.addEventListener('click', function() {
+            closeTicketModal();
+        });
+    });
+
+    document.getElementById('ticketModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeTicketModal();
+        }
     });
 </script>
