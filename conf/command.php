@@ -273,18 +273,18 @@ function actionMenu(): void
             <li class='nav-item'><a href='#news' class='nav-link'>Jadwal Praktek</a></li>
             <li class='nav-item'><a href='?act=FasilitasKamar' class='nav-link'>Fasilitas</a></li>
         <?php } else if (($aksi == "FasilitasKamar") || ($aksi == "FasilitasRadiologi") || ($aksi == "FasilitasLaborat") || ($aksi == "FasilitasOperasi") || ($aksi == "FasilitasOnline")) { ?>
-                <li class='nav-item'><a class='nav-link' href='?act=Home'>Home</a></li>
-                <li class='nav-item'><a href='?act=FasilitasKamar' class='nav-link'>Kamar</a></li>
-                <li class='nav-item'><a href='?act=FasilitasRadiologi' class='nav-link'>Radiologi</a></li>
-                <li class='nav-item'><a href='?act=FasilitasLaborat' class='nav-link'>Laborat</a></li>
-                <li class='nav-item'><a href='?act=FasilitasOperasi' class='nav-link'>Operasi</a></li>
+            <li class='nav-item'><a class='nav-link' href='?act=Home'>Home</a></li>
+            <li class='nav-item'><a href='?act=FasilitasKamar' class='nav-link'>Kamar</a></li>
+            <li class='nav-item'><a href='?act=FasilitasRadiologi' class='nav-link'>Radiologi</a></li>
+            <li class='nav-item'><a href='?act=FasilitasLaborat' class='nav-link'>Laborat</a></li>
+            <li class='nav-item'><a href='?act=FasilitasOperasi' class='nav-link'>Operasi</a></li>
         <?php } else { ?>
-                <li class='nav-item'><a href='?act=Home#top' class='nav-link'>Home</a></li>
-                <li class='nav-item'><a href='?act=Home#about' class='nav-link'>Tentang Kami</a></li>
-                <li class='nav-item'><a href='?act=Home#team' class='nav-link'>Dokter Kami</a></li>
-                <li class='nav-item'><a href='?act=Home#news' class='nav-link'>Jadwal Praktek</a></li>
-                <li class='nav-item'><a href='?act=FasilitasKamar' class='nav-link'>Fasilitas</a></li>
-        <?php }
+            <li class='nav-item'><a href='?act=Home#top' class='nav-link'>Home</a></li>
+            <li class='nav-item'><a href='?act=Home#about' class='nav-link'>Tentang Kami</a></li>
+            <li class='nav-item'><a href='?act=Home#team' class='nav-link'>Dokter Kami</a></li>
+            <li class='nav-item'><a href='?act=Home#news' class='nav-link'>Jadwal Praktek</a></li>
+            <li class='nav-item'><a href='?act=FasilitasKamar' class='nav-link'>Fasilitas</a></li>
+<?php }
     endif;
 }
 

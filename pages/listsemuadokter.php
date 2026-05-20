@@ -10,7 +10,7 @@ visitor_section_open();
 ?>
 <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
     <?php while ($row = mysqli_fetch_array($querysemuadokter)):
-        $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
+        $photoName = trim((string) $row["kd_dokter"]) . ".webp";
         $defaultPhoto = "assets/images/avatar.png";
         $photo = photo_url . $photoName;
         $nama_dokter = preg_replace_callback(

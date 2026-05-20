@@ -86,7 +86,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                         $daftar = getOne("select count(no_rkm_medis) from booking_registrasi where tanggal_periksa='$thncari-$blncari-$tglcari' and kd_dokter='" . $rsqueryjadwal["kd_dokter"] . "' and kd_poli='" . $rsqueryjadwal["kd_poli"] . "'");
                                         $terdaftar = getOne("select count(no_rkm_medis) from booking_registrasi where tanggal_periksa='$thncari-$blncari-$tglcari' and kd_dokter='" . $rsqueryjadwal["kd_dokter"] . "' and kd_poli='" . $rsqueryjadwal["kd_poli"] . "' and no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "'");
 
-                                        $photoName = trim((string) $rsqueryjadwal["kd_dokter"]) . ".jpg";
+                                        $photoName = trim((string) $rsqueryjadwal["kd_dokter"]) . ".webp";
                                         $defaultPhoto = "assets/images/avatar.png";
                                         $photo = photo_url . $photoName;
                                     ?>
@@ -176,10 +176,10 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                     <?php
                                     $queryriwayat = bukaquery("
                                         SELECT 
-                                            booking_registrasi.tanggal_booking,
+                                            DATE_FORMAT(booking_registrasi.tanggal_booking, '%d-%m-%Y') AS tanggal_booking,
                                             booking_registrasi.no_rkm_medis,
-                                            booking_registrasi.jam_booking,
-                                            booking_registrasi.tanggal_periksa,
+                                            TIME_FORMAT(booking_registrasi.jam_booking, '%H:%i') AS jam_booking,
+                                            DATE_FORMAT(booking_registrasi.tanggal_periksa, '%d-%m-%Y') AS tanggal_periksa,
                                             booking_registrasi.kd_dokter,
                                             dokter.nm_dokter,
                                             booking_registrasi.kd_poli,
@@ -189,7 +189,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                             penjab.png_jawab,
                                             booking_registrasi.status,
                                             pasien.nm_pasien,
-                                            CONCAT(jadwal.hari_kerja, ', ', jadwal.jam_mulai, ' - ', jadwal.jam_selesai) AS jam_periksa
+                                            CONCAT(TIME_FORMAT(jadwal.jam_mulai, '%H:%i'), ' - ', TIME_FORMAT(jadwal.jam_selesai, '%H:%i')) AS jam_periksa
                                         FROM booking_registrasi
                                         INNER JOIN dokter 
                                             ON booking_registrasi.kd_dokter = dokter.kd_dokter
@@ -216,18 +216,17 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                                         data-booking-time="<?= e($rsqueryriwayat["jam_booking"]); ?>"
                                                         data-periksa="<?= e($rsqueryriwayat["tanggal_periksa"]); ?>"
                                                         data-pasien="<?= e($rsqueryriwayat["nm_pasien"]); ?>"
-                                                    data-norm="<?= e($rsqueryriwayat["no_rkm_medis"]); ?>"
-                                                    data-poli="<?= e($rsqueryriwayat["nm_poli"]); ?>"
-                                                    data-dokter="<?= e($rsqueryriwayat["nm_dokter"]); ?>"
-                                                    data-noreg="<?= e($rsqueryriwayat["no_reg"]); ?>"
-                                                    data-status="<?= e($rsqueryriwayat["status"]); ?>"
-                                                    data-jam-periksa="<?= e($rsqueryriwayat["jam_periksa"]); ?>"
-                                                    ><i class="fas fa-print"></i></button>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold"><?= $rsqueryriwayat["tanggal_booking"]; ?></span>
-                                                    <span><?= $rsqueryriwayat["jam_booking"]; ?></span>
+                                                        data-norm="<?= e($rsqueryriwayat["no_rkm_medis"]); ?>"
+                                                        data-poli="<?= e($rsqueryriwayat["nm_poli"]); ?>"
+                                                        data-dokter="<?= e($rsqueryriwayat["nm_dokter"]); ?>"
+                                                        data-noreg="<?= e($rsqueryriwayat["no_reg"]); ?>"
+                                                        data-status="<?= e($rsqueryriwayat["status"]); ?>"
+                                                        data-jam-periksa="<?= e($rsqueryriwayat["jam_periksa"]); ?>"><i class="fas fa-print"></i></button>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-semibold"><?= $rsqueryriwayat["tanggal_booking"]; ?></span>
+                                                        <span><?= $rsqueryriwayat["jam_booking"]; ?></span>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </td>
                                             <td class="text-left">
                                                 <div class="flex flex-col">
@@ -336,43 +335,36 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
         </div>
         <div class="px-6 py-6">
             <div class="grid gap-4 sm:grid-cols-2">
-                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Nama Pasien</p>
-                    <p id="ticketPasien" class="mt-2 text-lg font-semibold text-slate-900"></p>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">No. Registrasi</p>
+                    <p id="ticketNoReg" class="mt-4 text-3xl font-mono font-semibold text-emerald-700"></p>
                 </div>
                 <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">No. RM</p>
-                    <p id="ticketNoRM" class="mt-2 text-lg font-semibold text-slate-900"></p>
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Nama Pasien / No. RM</p>
+                    <p id="ticketPasien" class="mt-2 text-base font-semibold text-slate-900"></p>
+                    <p id="ticketNoRM" class="mt-1 text-sm text-slate-600"></p>
                 </div>
                 <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
                     <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Poliklinik / Dokter</p>
                     <p id="ticketPoli" class="mt-2 text-base font-semibold text-slate-900"></p>
                     <p id="ticketDokter" class="mt-1 text-sm text-slate-600"></p>
                 </div>
-                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">No. Registrasi</p>
-                    <p id="ticketNoReg" class="mt-4 text-3xl font-mono font-semibold text-emerald-700"></p>
-                </div>
             </div>
             <div class="mt-6 grid gap-4 rounded-[30px] border border-slate-200 bg-slate-100 p-5">
-                <div class="grid gap-2 sm:grid-cols-2">
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Booking</p>
-                        <p id="ticketBooking" class="mt-2 text-base font-semibold text-slate-900"></p>
-                    </div>
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Jam Booking</p>
-                        <p id="ticketBookingTime" class="mt-2 text-base font-semibold text-slate-900"></p>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Booking</p>
+                    <div class="flex gap-1 sm:gap-2 mt-2 text-base font-semibold text-slate-900">
+                        <span id="ticketBooking"></span>
+                        <span class="">|</span>
+                        <span id="ticketBookingTime"></span><span>WIB</span>
                     </div>
                 </div>
-                <div class="grid gap-2 sm:grid-cols-2">
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Periksa</p>
-                        <p id="ticketPeriksa" class="mt-2 text-base font-semibold text-slate-900"></p>
-                    </div>
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Jam Periksa</p>
-                        <p id="ticketPeriksaTime" class="mt-2 text-base font-semibold text-slate-900"></p>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Tgl. Periksa</p>
+                    <div class="flex gap-1 sm:gap-2 mt-2 text-base font-semibold text-slate-900">
+                        <span id="ticketPeriksa"></span>
+                        <span class="">|</span>
+                        <span id="ticketPeriksaTime"></span><span>WIB</span>
                     </div>
                 </div>
             </div>

@@ -151,7 +151,7 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
                         <?php while ($row = mysqli_fetch_array($queryjadwal)):
                             $terdaftar = (int) getOne("select count(*) from reg_periksa where kd_poli='" . $row["kd_poli"] . "' and kd_dokter='" . $row["kd_dokter"] . "' and tgl_registrasi='" . date("Y-m-d") . "'");
                             $persen = $row["kuota"] > 0 ? min(100, ($terdaftar / $row["kuota"]) * 100) : 0;
-                            $photoName = trim((string) $row["kd_dokter"]) . ".jpg";
+                            $photoName = trim((string) $row["kd_dokter"]) . ".webp";
                             $defaultPhoto = "assets/images/avatar.png";
                             $photo = photo_url . $photoName;
                         ?>

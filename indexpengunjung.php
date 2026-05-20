@@ -152,11 +152,11 @@
 
     <script src="assets/plugin/jquery-3.7.1.min.js"></script>
     <script>
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
             var loader = document.getElementById('page-loader');
             if (loader) {
                 loader.classList.add('opacity-0', 'pointer-events-none', 'transition-opacity', 'duration-300');
-                setTimeout(function () {
+                setTimeout(function() {
                     loader.remove();
                 }, 320);
             }
@@ -164,7 +164,7 @@
 
         var mobileMenuButton = document.getElementById('mobile-menu-button');
         if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', function () {
+            mobileMenuButton.addEventListener('click', function() {
                 var menu = document.getElementById('mobile-menu');
                 if (!menu) {
                     return;
@@ -174,19 +174,80 @@
                 this.setAttribute('aria-expanded', String(!menu.classList.contains('hidden')));
             });
         }
-    </script>
-    <script>
-        $(function () {
-            $('#carikeyword').on('submit', function () {
-                $.post('pages/listjadwaldokter.php', {
-                    value: $('#keyword').val()
-                }, function (data) {
-                    $('#hasilcari').html(data);
+
+        $(document).ready(function() {
+            const $searchInput = $('#keyword');
+            const $doctorCards = $('.doctor-card');
+            const $noDataCard = $('#noDataCard');
+            let debounceTimer;
+
+            function filterCards(keyword) {
+                const filter = keyword.toLowerCase().trim();
+                let hasVisibleCard = false;
+
+                $doctorCards.each(function() {
+                    const $card = $(this);
+                    const namaPoli = $card.data('poli') || '';
+                    const namaDokter = $card.data('dokter') || '';
+
+                    // Pencarian mencakup nama dokter dan nama poliklinik
+                    const isMatch = namaPoli.includes(filter) || namaDokter.includes(filter);
+
+                    // Animasi transisi tipis saat sembunyi/muncul
+                    if (isMatch) {
+                        $card.fadeIn(150);
+                        hasVisibleCard = true;
+                    } else {
+                        $card.fadeOut(100);
+                    }
                 });
 
-                return false;
+                // Tampilkan feedback jika data yang dicari kosong
+                if (hasVisibleCard) {
+                    $noDataCard.addClass('hidden');
+                } else {
+                    $noDataCard.removeClass('hidden');
+                }
+            }
+
+            // Debounce handler
+            $searchInput.on('input', function() {
+                clearTimeout(debounceTimer);
+
+                debounceTimer = setTimeout(() => {
+                    filterCards($(this).val());
+                }, 300); // Eksekusi pencarian 300ms setelah user berhenti mengetik
             });
         });
+
+        // Lazy loading untuk gambar
+        const lazyImages = document.querySelectorAll('.lazy-load');
+
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy-load');
+                        img.onerror = function() {
+                            this.src = 'assets/images/avatar.png';
+                        };
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        } else {
+            // Fallback untuk browser lama
+            lazyImages.forEach(img => {
+                img.src = img.dataset.src;
+                img.onerror = function() {
+                    this.src = 'assets/images/avatar.png';
+                };
+            });
+        }
     </script>
 </body>
 

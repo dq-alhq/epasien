@@ -26,6 +26,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -40,7 +41,7 @@
 }
 
 @utility surface-card {
-  @apply overflow-hidden rounded-[28px] border border-white/70 bg-white/95 shadow-soft ring-1 ring-nu-100/70;
+  @apply rounded-[28px] border border-white/70 bg-white/95 shadow-soft ring-1 ring-nu-100/70;
 }
 
 @utility dashboard-surface {
@@ -75,7 +76,7 @@
   }
 
   & td {
-    @apply px-5 py-4 align-middle text-slate-700;
+    @apply px-5 py-4 align-middle text-slate-700 whitespace-nowrap;
   }
 
   & tbody tr {
@@ -99,7 +100,7 @@
   }
 
   & td {
-    @apply px-5 py-4 align-middle text-slate-700;
+    @apply px-5 py-4 align-middle text-slate-700 whitespace-nowrap;
   }
 
   & tbody tr {
@@ -123,7 +124,7 @@
   }
 
   & td {
-    @apply px-5 py-4 align-middle text-slate-700;
+    @apply px-5 py-4 align-middle text-slate-700 whitespace-nowrap;
   }
 
   & tbody tr {
@@ -421,10 +422,10 @@
   }
 
   body.app-user {
-    @apply bg-[linear-gradient(180deg,#f8fafc_0%,#f0fdf4_55%,#ffffff_100%)];
+    @apply bg-gradient-to-br from-nu-50 via-nu-100 to-white;
   }
 
   body.app-guest {
-    @apply bg-[linear-gradient(180deg,#f8fafc_0%,#f0fdf4_50%,#ffffff_100%)];
+    @apply bg-gradient-to-br from-nu-50 via-nu-100 to-white;
   }
 }

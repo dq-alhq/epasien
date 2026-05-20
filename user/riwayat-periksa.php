@@ -29,8 +29,8 @@ dashboard_page_header('Riwayat Periksa', 'Riwayat Kunjungan dan Pemeriksaan', 'A
                         <td><?= e($row["status_lanjut"]); ?></td>
                         <td>
                             <div class="flex flex-wrap gap-2">
-                                <a href='?act=CekResume&iyem=<?= urlencode(encrypt_decrypt("{\"norawat\":\"" . $row["no_rawat"] . "\"}", "e")); ?>' class='dashboard-btn-primary'>Resume</a>
-                                <a href='?act=CekBilling&iyem=<?= urlencode(encrypt_decrypt("{\"norawat\":\"" . $row["no_rawat"] . "\"}", "e")); ?>' class='dashboard-btn-danger'>Billing</a>
+                                <a href='?act=CekResume&iyem=<?= urlencode(encrypt_decrypt("{\"norawat\":\"" . $row["no_rawat"] . "\"}", "e")); ?>' class='btn btn-primary btn-transition'>Resume</a>
+                                <a href='?act=CekBilling&iyem=<?= urlencode(encrypt_decrypt("{\"norawat\":\"" . $row["no_rawat"] . "\"}", "e")); ?>' class='btn btn-danger btn-transition'>Billing</a>
                             </div>
                         </td>
                     </tr>
