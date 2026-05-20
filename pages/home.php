@@ -137,7 +137,6 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
             ORDER BY poliklinik.nm_poli, dokter.nm_dokter
         ");
 
-    // Kita kelompokkan data jadwal berdasarkan dokter agar penataan card menjadi bersih
     $jadwalGrouped = [];
     while ($row = mysqli_fetch_array($queryjadwal)) {
         $idDokter = $row['kd_dokter'];
@@ -163,11 +162,9 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
     }
     ?>
 
-    <!-- Grid Container untuk Card Dokter -->
     <div id="dokterGrid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php if (!empty($jadwalGrouped)): ?>
             <?php foreach ($jadwalGrouped as $dokter): ?>
-                <!-- Card Item -->
                 <div class="doctor-card bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-emerald-100 transition-all flex flex-col justify-between"
                     data-poli="<?= htmlspecialchars(strtolower($dokter['poli']), ENT_QUOTES, 'UTF-8') ?>"
                     data-dokter="<?= htmlspecialchars(strtolower($dokter['nama']), ENT_QUOTES, 'UTF-8') ?>"
@@ -175,9 +172,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                     <?= !$dokter['jadwal_hari_ini'] ? 'style="display: none;"' : '' ?>>
 
                     <div>
-                        <!-- Header Card: Profil Dokter -->
                         <div class="flex items-center gap-4">
-                            <!-- Avatar dengan Inisial/Placeholder foto beraksen Hijau NU -->
                             <img alt="Foto dokter" src="<?= e($defaultPhoto); ?>" data-src="<?= e($dokter['photo']); ?>"
                                 class="size-14 rounded-2xl object-cover border border-emerald-700/20 shadow-sm lazy-load">
                             <div>
@@ -188,16 +183,13 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                             </div>
                         </div>
 
-                        <!-- Divider interior card -->
                         <div class="my-4 border-t border-dashed border-slate-100"></div>
 
-                        <!-- List Jadwal Praktik -->
                         <div class="space-y-2.5">
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Waktu Praktik</span>
                             <?php foreach ($dokter['sesi'] as $sesi): ?>
                                 <div class="flex items-center justify-between text-sm bg-slate-50/70 p-2 rounded-xl border border-slate-100/50">
                                     <span class="font-semibold text-slate-700 flex items-center gap-1.5">
-                                        <!-- Bullet point beraksen emas NU -->
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                         <?= htmlspecialchars($sesi['hari'], ENT_QUOTES, 'UTF-8') ?>
                                     </span>
@@ -211,7 +203,6 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
         <?php endif; ?>
     </div>
 
-    <!-- State Data Kosong -->
     <div id="noDataCard" class="hidden py-12 text-center">
         <div class="inline-flex p-4 bg-slate-50 rounded-full text-slate-400 mb-3">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">

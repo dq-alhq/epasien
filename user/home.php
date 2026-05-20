@@ -21,19 +21,19 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
 <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
     <div class="dashboard-card bg-[linear-gradient(135deg,#dc2626,#ef4444)] text-white">
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Total Kunjungan</p>
-        <p class="mt-4 text-4xl font-bold"><?= $jumlahKunjungan; ?></p>
+        <p class="mt-4 text-4xl font-bold timer" data-to="<?= $jumlahKunjungan; ?>"></p>
     </div>
     <div class="dashboard-card bg-[linear-gradient(135deg,#0f766e,#14b8a6)] text-white">
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Rawat Jalan</p>
-        <p class="mt-4 text-4xl font-bold"><?= $jumlahRalan; ?></p>
+        <p class="mt-4 text-4xl font-bold timer" data-to="<?= $jumlahRalan; ?>"></p>
     </div>
     <div class="dashboard-card bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-white">
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Rawat Inap</p>
-        <p class="mt-4 text-4xl font-bold"><?= $jumlahRanap; ?></p>
+        <p class="mt-4 text-4xl font-bold timer" data-to="<?= $jumlahRanap; ?>"></p>
     </div>
     <div class="dashboard-card bg-[linear-gradient(135deg,#d97706,#f59e0b)] text-white">
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Bulan Ini</p>
-        <p class="mt-4 text-4xl font-bold"><?= $jumlahBulanIni; ?></p>
+        <p class="mt-4 text-4xl font-bold timer" data-to="<?= $jumlahBulanIni; ?>"></p>
     </div>
 </div>
 
@@ -232,20 +232,4 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
             </div>
         <?php endif; ?>
     </div>
-
-
 </div>
-
-<script src="assets/plugin/count-to.js"></script>
-<script>
-    $(document).ready(function() {
-        function loadQueue() {
-            $("#screen").load("pages/daftarantrian.php");
-        }
-
-        if ($("#screen").length) {
-            loadQueue();
-            setInterval(loadQueue, 6000);
-        }
-    });
-</script>

@@ -57,8 +57,6 @@ if (isset($_SESSION["ses_pasien"])) {
                     <?php actionPages(); ?>
                 </div>
             </main>
-
-            <!-- <?php include_once "layouts/footer.php"; ?> -->
         </div>
     </div>
 
@@ -96,6 +94,10 @@ if (isset($_SESSION["ses_pasien"])) {
                     }
                 });
             });
+        });
+
+        $(document).ready(function() {
+            $(".timer").countTo();
         });
     </script>
 </body>
