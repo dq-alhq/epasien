@@ -351,7 +351,7 @@ function clean_post(string $key, ?int $maxLength = null, bool $allowSpecialChars
 
 function visitor_page_intro(string $eyebrow, string $title, string $description): void
 {
-    echo "<section class='relative overflow-hidden border-b border-emerald-100/80 bg-[radial-gradient(circle_at_top_left,_rgba(22,163,74,0.18),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98),_rgba(240,253,244,0.96))]'>";
+    echo "<section class='relative overflow-hidden border-b border-emerald-100/80 bg-[radial-gradient(circle_at_top_left,rgba(22,163,74,0.18),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(240,253,244,0.96))]'>";
     echo "<div class='mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20'>";
     echo "<div class='max-w-3xl'>";
     echo "<span class='inline-flex items-center rounded-full border border-emerald-200 bg-white/90 px-4 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700'>" . e($eyebrow) . "</span>";

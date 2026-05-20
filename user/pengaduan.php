@@ -8,7 +8,7 @@ dashboard_page_header('Pengaduan', 'Komunikasi Pengaduan Pasien', 'Sampaikan pes
 <div class="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
     <div class="dashboard-card">
         <h2 class="text-2xl font-bold text-slate-900">Percakapan</h2>
-        <div id="screen" class="mt-6 h-[28rem] overflow-y-auto rounded-[24px] border border-slate-200 bg-slate-50/70 p-4"></div>
+        <div id="screen" class="mt-6 h-112 overflow-y-auto rounded-[24px] border border-slate-200 bg-slate-50/70 p-4"></div>
     </div>
 
     <div class="dashboard-card">

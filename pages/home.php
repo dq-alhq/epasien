@@ -10,7 +10,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
 ?>
 <section class="relative overflow-hidden">
     <div
-        class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_rgba(18,130,75,0.12),_transparent_34%),linear-gradient(135deg,_rgba(255,255,255,0.96),_rgba(220,252,231,0.94))]">
+        class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(18,130,75,0.12),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.96),rgba(220,252,231,0.94))]">
     </div>
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-20">
         <div class="max-w-3xl">

@@ -132,7 +132,7 @@ QRcode::png(encrypt_decrypt($_SESSION["ses_pasien"], "d"), $filename, $errorCorr
 </style>
 <div class='row'>
     <div class='col-12'>
-        <div class='justify-content-center d-flex flex-column align-items-center flex-shrink-0'>
+        <div class='justify-content-center d-flex flex-column align-items-center shrink-0'>
             <div class="kartu">
                 <div class="kop">
                     <h1>KARTU PASIEN</h1>

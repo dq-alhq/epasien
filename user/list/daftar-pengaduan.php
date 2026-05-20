@@ -22,7 +22,7 @@ require_once('../../conf/conf.php');
                 <div class="avatar-icon-wrapper ml-1">
                     <div class="badge badge-bottom btn-shine badge-success badge-dot badge-dot-lg">
                     </div>
-                    <div class="avatar-icon avatar-icon-lg rounded">
+                    <div class="avatar-icon avatar-icon-lg rounded-sm">
                         <img src="<?= $_SESSION["photo"]; ?>" alt="">
                     </div>
                 </div>
@@ -34,7 +34,7 @@ require_once('../../conf/conf.php');
             <div class="chat-box-wrapper">
                 <div>
                     <div class="avatar-icon-wrapper mr-1">
-                        <div class="avatar-icon avatar-icon-lg rounded">
+                        <div class="avatar-icon avatar-icon-lg rounded-sm">
                             <img src="assets/images/rsimnu.png" alt="">
                         </div>
                     </div>

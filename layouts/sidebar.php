@@ -3,7 +3,7 @@ $halaman = $_GET["hal"] ?? null;
 $subhalaman = $_GET["act"] ?? null;
 $menuItems = dashboard_menu_items();
 ?>
-<div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/45 backdrop-blur-sm lg:hidden"></div>
+<div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/45 backdrop-blur-xs lg:hidden"></div>
 
 <aside id="dashboard-sidebar"
     class="fixed inset-y-0 left-0 z-50 flex w-80 -translate-x-full flex-col border-r border-white/70 bg-[linear-gradient(180deg,rgba(10,42,29,0.98),rgba(15,106,62,0.96))] text-white shadow-2xl transition-transform duration-300 lg:translate-x-0">
@@ -26,7 +26,7 @@ $menuItems = dashboard_menu_items();
     </div>
 
     <div class="px-6 pt-5">
-        <div class="rounded-xl border border-white/10 bg-white/10 p-2 backdrop-blur">
+        <div class="rounded-xl border border-white/10 bg-white/10 p-2 backdrop-blur-sm">
             <div class="flex items-start gap-2">
                 <img src="<?= e($_SESSION['photo'] ?? 'assets/images/userlaki.png'); ?>" alt="Foto pasien"
                     class="size-14 rounded-lg object-cover ring-2 ring-white/20">

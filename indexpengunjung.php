@@ -17,7 +17,7 @@
 </head>
 
 <body class="app-guest">
-    <div id="page-loader" class="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 backdrop-blur">
+    <div id="page-loader" class="fixed inset-0 z-100 flex items-center justify-center bg-white/90 backdrop-blur-sm">
         <div class="flex items-center gap-4 rounded-full border border-nu-100 bg-white px-6 py-4 shadow-soft">
             <span class="h-3 w-3 animate-pulse rounded-full bg-nu-600"></span>
             <span class="text-sm font-semibold tracking-[0.22em] text-nu-700">MEMUAT EPASIEN</span>
@@ -30,7 +30,7 @@
                 <div class="flex items-center justify-between gap-6 py-4">
                     <a href="?act=Home" class="flex items-center gap-4">
                         <span
-                            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+                            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-xs ring-1 ring-slate-200">
                             <img src="assets/images/rsimnu.png" width="34" alt="Logo Rumah Sakit">
                         </span>
                         <span class="min-w-0">

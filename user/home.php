@@ -158,7 +158,7 @@ dashboard_page_header('Beranda Pasien', 'Ringkasan Layanan Anda', 'Pantau aktivi
                             <tr>
                                 <td>
                                     <div class="flex gap-2 items-center h-auto">
-                                        <img width="40" class="rounded" src="<?= e($photo); ?>" alt="Foto" onerror="this.src='<?= e($defaultPhoto); ?>'">
+                                        <img width="40" class="rounded-sm" src="<?= e($photo); ?>" alt="Foto" onerror="this.src='<?= e($defaultPhoto); ?>'">
                                         <div class="grid gap-0 pr-5">
                                             <span class="text-sm whitespace-nowrap font-medium">
                                                 <?= e($row["nm_poli"]); ?>
