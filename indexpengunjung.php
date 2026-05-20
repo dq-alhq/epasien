@@ -181,7 +181,7 @@
             const $noDataCard = $('#noDataCard');
             let debounceTimer;
 
-            function filterCards(keyword) {
+            function filterCards(keyword, immediate = false) {
                 const filter = keyword.toLowerCase().trim();
                 let hasVisibleCard = false;
 
@@ -189,16 +189,30 @@
                     const $card = $(this);
                     const namaPoli = $card.data('poli') || '';
                     const namaDokter = $card.data('dokter') || '';
+                    const hariIni = $card.data('hari-ini') === 1 || $card.data('hari-ini') === '1';
 
-                    // Pencarian mencakup nama dokter dan nama poliklinik
-                    const isMatch = namaPoli.includes(filter) || namaDokter.includes(filter);
+                    let isMatch = false;
+                    if (filter === '') {
+                        isMatch = hariIni;
+                    } else {
+                        // Pencarian mencakup nama dokter dan nama poliklinik
+                        isMatch = namaPoli.includes(filter) || namaDokter.includes(filter);
+                    }
 
                     // Animasi transisi tipis saat sembunyi/muncul
                     if (isMatch) {
-                        $card.fadeIn(150);
+                        if (immediate) {
+                            $card.show();
+                        } else {
+                            $card.fadeIn(150);
+                        }
                         hasVisibleCard = true;
                     } else {
-                        $card.fadeOut(100);
+                        if (immediate) {
+                            $card.hide();
+                        } else {
+                            $card.fadeOut(100);
+                        }
                     }
                 });
 
@@ -209,6 +223,9 @@
                     $noDataCard.removeClass('hidden');
                 }
             }
+
+            // Inisialisasi filter awal
+            filterCards($searchInput.val(), true);
 
             // Debounce handler
             $searchInput.on('input', function() {

@@ -119,6 +119,9 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
     </div>
 
     <?php
+    $hari = getOne("select DAYNAME(current_date())");
+    $hariIni = strtoupper(konversiHari($hari));
+
     $queryjadwal = bukaquery("
             SELECT 
                 dokter.kd_dokter,
@@ -146,13 +149,17 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                 'nama' => $row['nm_dokter'],
                 'poli' => $row['nm_poli'],
                 'photo' => $photo,
-                'sesi' => []
+                'sesi' => [],
+                'jadwal_hari_ini' => false
             ];
         }
         $jadwalGrouped[$idDokter]['sesi'][] = [
             'hari' => $row['hari_kerja'],
             'jam'  => date("H:i", strtotime($row['jam_mulai'])) . " - " . date("H:i", strtotime($row['jam_selesai']))
         ];
+        if (strtoupper($row['hari_kerja']) === $hariIni) {
+            $jadwalGrouped[$idDokter]['jadwal_hari_ini'] = true;
+        }
     }
     ?>
 
@@ -163,7 +170,9 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                 <!-- Card Item -->
                 <div class="doctor-card bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-emerald-100 transition-all flex flex-col justify-between"
                     data-poli="<?= htmlspecialchars(strtolower($dokter['poli']), ENT_QUOTES, 'UTF-8') ?>"
-                    data-dokter="<?= htmlspecialchars(strtolower($dokter['nama']), ENT_QUOTES, 'UTF-8') ?>">
+                    data-dokter="<?= htmlspecialchars(strtolower($dokter['nama']), ENT_QUOTES, 'UTF-8') ?>"
+                    data-hari-ini="<?= $dokter['jadwal_hari_ini'] ? '1' : '0' ?>"
+                    <?= !$dokter['jadwal_hari_ini'] ? 'style="display: none;"' : '' ?>>
 
                     <div>
                         <!-- Header Card: Profil Dokter -->
