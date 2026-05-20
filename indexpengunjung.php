@@ -164,14 +164,32 @@
 
         var mobileMenuButton = document.getElementById('mobile-menu-button');
         if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', function() {
+            mobileMenuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+
                 var menu = document.getElementById('mobile-menu');
                 if (!menu) {
                     return;
                 }
 
                 menu.classList.toggle('hidden');
-                this.setAttribute('aria-expanded', String(!menu.classList.contains('hidden')));
+                this.setAttribute(
+                    'aria-expanded',
+                    String(!menu.classList.contains('hidden'))
+                );
+            });
+
+            document.addEventListener('click', function(e) {
+                var menu = document.getElementById('mobile-menu');
+
+                if (
+                    menu &&
+                    !menu.classList.contains('hidden') &&
+                    !mobileMenuButton.contains(e.target)
+                ) {
+                    menu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
             });
         }
 
