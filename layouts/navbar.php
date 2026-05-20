@@ -2,6 +2,15 @@
 if (isset($_POST['logout']) && $_POST['logout'] === 'logout') {
     $_SESSION["ses_pasien"] = null;
     unset($_SESSION["ses_pasien"]);
+    unset($_SESSION["nm_pasien"]);
+    unset($_SESSION["email"]);
+    unset($_SESSION["jk"]);
+    unset($_SESSION["no_tlp"]);
+    unset($_SESSION["no_peserta"]);
+    unset($_SESSION["no_ktp"]);
+    unset($_SESSION["tmp_lahir"]);
+    unset($_SESSION["tgl_lahir"]);
+    unset($_SESSION["photo"]);
     session_destroy();
     exit(header("Location:/epasien"));
 }
@@ -62,7 +71,7 @@ foreach (dashboard_menu_items() as $item) {
 </header>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var sidebar = document.getElementById('dashboard-sidebar');
         var overlay = document.getElementById('sidebar-overlay');
         var openButton = document.getElementById('open-sidebar');
@@ -100,21 +109,21 @@ foreach (dashboard_menu_items() as $item) {
         var items = document.querySelectorAll('.dashboard-search-item');
 
         if (searchInput && results && empty) {
-            searchInput.addEventListener('input', function () {
+            searchInput.addEventListener('input', function() {
                 var keyword = searchInput.value.trim().toLowerCase();
                 var found = 0;
 
                 if (keyword === '') {
                     results.classList.add('hidden');
                     empty.classList.add('hidden');
-                    items.forEach(function (item) {
+                    items.forEach(function(item) {
                         item.classList.remove('hidden');
                     });
                     return;
                 }
 
                 results.classList.remove('hidden');
-                items.forEach(function (item) {
+                items.forEach(function(item) {
                     var matches = item.dataset.label.indexOf(keyword) !== -1;
                     item.classList.toggle('hidden', !matches);
                     if (matches) {
@@ -125,7 +134,7 @@ foreach (dashboard_menu_items() as $item) {
                 empty.classList.toggle('hidden', found !== 0);
             });
 
-            document.addEventListener('click', function (event) {
+            document.addEventListener('click', function(event) {
                 if (!results.contains(event.target) && event.target !== searchInput) {
                     results.classList.add('hidden');
                 }

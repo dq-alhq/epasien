@@ -14,7 +14,7 @@ if (isset($_SESSION["ses_pasien"])) {
             $_SESSION["tmp_lahir"] = $rsqueryuser["tmp_lahir"];
             $_SESSION["tgl_lahir"] = $rsqueryuser["tgl_lahir"];
             if (($rsqueryuser["gambar"] ?? '') === "" || ($rsqueryuser["gambar"] ?? '') === "-") {
-                $_SESSION["photo"] = $rsqueryuser["jk"] === "L" ? "assets/images/userlaki.png" : "assets/images/userperempuan.png";
+                $_SESSION["photo"] = $rsqueryuser["jk"] === "L" ? "assets/images/male.png" : "assets/images/female.png";
             } else {
                 $_SESSION["photo"] = "http://" . host() . "/webapps/photopasien/" . $rsqueryuser["gambar"];
             }

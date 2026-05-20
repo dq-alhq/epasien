@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {
         $errorCaptcha = true;
     } elseif ($noRkmMedis !== '' && $nik !== '' && getOne2("select count(*) from pasien where no_rkm_medis='{$noRkmMedis}' and no_ktp='{$nik}'") > 0) {
         $_SESSION["ses_pasien"] = encrypt_decrypt($noRkmMedis, "e");
-        exit(header("Location:/epasien"));
+        exit(header("Location:index.php"));
     } else {
         $errorLogin = true;
     }
