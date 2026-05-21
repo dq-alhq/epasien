@@ -6,6 +6,7 @@ if (strpos($_SERVER['REQUEST_URI'], "pages")) {
 $jamSekarang = date("H:i");
 
 $besok = date("Y-m-d", strtotime("+1 day"));
+$hari_ini = date("Y-m-d");
 $tanggalRegistrasiInput = trim((string) ($_POST['tgl_registrasi'] ?? $besok));
 $tanggalRegistrasi = DateTime::createFromFormat('Y-m-d', $tanggalRegistrasiInput);
 
@@ -51,7 +52,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                         <div class="w-full">
                             <label for="tgl_registrasi" class="dashboard-label">Tanggal Rencana Periksa</label>
                             <input type="date" class="form-control" name="tgl_registrasi" id="tgl_registrasi"
-                                min="<?= e($besok); ?>" value="<?= e($tanggalRegistrasiFormatted); ?>" required>
+                                min="<?= e($hari_ini); ?>" value="<?= e($tanggalRegistrasiFormatted); ?>" required>
                         </div>
                         <button class="btn btn-danger" type="submit" name="pilihpoli">
                             TAMPILKAN JADWAL TERSEDIA
@@ -135,15 +136,19 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                                 } else {
                                                     if ($terdaftar > 0) { ?>
                                                         <button class="btn btn-primary" disabled>Terdaftar</button>
-                                                    <?php } else if ($tglDipilih == $tglSekarang && $jamSekarang > $rsqueryjadwal["jam_selesai"]) { ?>
-                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
-                                                            Lewat</button>
-                                                    <?php } else if ($tglDipilih == $tglKemarin) { ?>
-                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah
-                                                            Lewat</button>
+                                                        <?php } else if ($tglDipilih == $tglSekarang) {
+                                                        $jam_mulai_minus_1h = date("H:i", strtotime($rsqueryjadwal["jam_mulai"] . " - 1 hour"));
+                                                        if ($jamSekarang >= $jam_mulai_minus_1h) { ?>
+                                                            <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah Lewat</button>
+                                                        <?php } else if ($daftar >= $rsqueryjadwal["kuota"]) { ?>
+                                                            <button class="btn btn-danger pointer-events-none opacity-50" disabled>Penuh</button>
+                                                        <?php } else {
+                                                            echo "<a href='?act=SimpanBookingRegistrasi&iyem=" . encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryjadwal["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryjadwal["kd_poli"] . "\",\"tanggal\":\"$thncari-$blncari-$tglcari\",\"kuota\":\"" . $rsqueryjadwal["kuota"] . "\"}", "e") . "' class='btn btn-success'>Booking</a>";
+                                                        }
+                                                    } else if ($tglDipilih == $tglKemarin) { ?>
+                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Sudah Lewat</button>
                                                     <?php } else if ($daftar >= $rsqueryjadwal["kuota"]) { ?>
-                                                        <button class="btn btn-danger pointer-events-none opacity-50"
-                                                            disabled>Penuh</button>
+                                                        <button class="btn btn-danger pointer-events-none opacity-50" disabled>Penuh</button>
                                                 <?php } else {
                                                         echo "<a href='?act=SimpanBookingRegistrasi&iyem=" . encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryjadwal["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryjadwal["kd_poli"] . "\",\"tanggal\":\"$thncari-$blncari-$tglcari\",\"kuota\":\"" . $rsqueryjadwal["kuota"] . "\"}", "e") . "' class='btn btn-success'>Booking</a>";
                                                     }
