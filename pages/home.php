@@ -150,12 +150,18 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
     ");
 
     $jadwalGrouped = [];
+
     while ($row = mysqli_fetch_array($queryjadwal)) {
-        $idDokter = $row['kd_dokter'];
+
+        // kombinasi dokter + poli
+        $idDokter = $row['kd_dokter'] . '_' . $row['nm_poli'];
+
         if (!isset($jadwalGrouped[$idDokter])) {
+
             $photoName = trim((string) $row["kd_dokter"]) . ".webp?v=4";
             $defaultPhoto = "assets/images/avatar.png";
             $photo = photo_url . $photoName;
+
             $jadwalGrouped[$idDokter] = [
                 'nama' => $row['nm_dokter'],
                 'poli' => $row['nm_poli'],
@@ -164,10 +170,12 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                 'jadwal_hari_ini' => false
             ];
         }
+
         $jadwalGrouped[$idDokter]['sesi'][] = [
             'hari' => $row['hari_kerja'],
             'jam'  => date("H:i", strtotime($row['jam_mulai'])) . " - " . date("H:i", strtotime($row['jam_selesai']))
         ];
+
         if (strtoupper($row['hari_kerja']) === $hariIni) {
             $jadwalGrouped[$idDokter]['jadwal_hari_ini'] = true;
         }
