@@ -123,19 +123,31 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
     $hariIni = strtoupper(konversiHari($hari));
 
     $queryjadwal = bukaquery("
-            SELECT 
-                dokter.kd_dokter,
-                dokter.nm_dokter,
+        SELECT 
+            dokter.kd_dokter,
+            dokter.nm_dokter,
+            jadwal.hari_kerja,
+            jadwal.jam_mulai,
+            jadwal.jam_selesai,
+            poliklinik.nm_poli
+        FROM jadwal
+        INNER JOIN dokter ON jadwal.kd_dokter = dokter.kd_dokter
+        INNER JOIN poliklinik ON jadwal.kd_poli = poliklinik.kd_poli
+        WHERE dokter.status = '1'
+        ORDER BY 
+            poliklinik.nm_poli,
+            dokter.nm_dokter,
+            FIELD(
                 jadwal.hari_kerja,
-                jadwal.jam_mulai,
-                jadwal.jam_selesai,
-                poliklinik.nm_poli
-            FROM jadwal
-            INNER JOIN dokter ON jadwal.kd_dokter = dokter.kd_dokter
-            INNER JOIN poliklinik ON jadwal.kd_poli = poliklinik.kd_poli
-            WHERE dokter.status = '1'
-            ORDER BY poliklinik.nm_poli, dokter.nm_dokter
-        ");
+                'SENIN',
+                'SELASA',
+                'RABU',
+                'KAMIS',
+                'JUMAT',
+                'SABTU',
+                'AKHAD'
+            )
+    ");
 
     $jadwalGrouped = [];
     while ($row = mysqli_fetch_array($queryjadwal)) {
