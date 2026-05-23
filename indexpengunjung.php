@@ -284,6 +284,7 @@
             });
         }
     </script>
+    <?php include_once 'layouts/chatbot.php'; ?>
 </body>
 
 </html>

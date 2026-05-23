@@ -100,6 +100,7 @@ if (isset($_SESSION["ses_pasien"])) {
             $(".timer").countTo();
         });
     </script>
+    <?php include_once 'layouts/chatbot.php'; ?>
 </body>
 
 </html>
