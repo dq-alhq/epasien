@@ -34,67 +34,65 @@ if (isset($nosurat["nosurat"])) {
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RUJUKAN</strong></h5>
             <h6 class="menu-header-title mb-3">No. <?= $rsquerysuratrujuk["no_rujuk"]; ?></h6>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body'>
-                    <table width='100%' class='table-hover' border='0' align='center' cellpadding='5' cellspacing='5'>
-                        <tr>
-                            <td width='100%' valign='top' align='right'><?= $_SESSION["kabupaten"]; ?>
-                                , <?= $rsquerysuratrujuk["tgl_rujuk"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>Kepada
-                                Yth.<br/><?= $rsquerysuratrujuk["rujuk_ke"]; ?><br/>Di
-                                Tempat
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>Bersama ini kami beritahukan bahwa kami telah
-                                merawat / memeriksa pasien berikut ini. Mohon pemeriksaan dan penanganan lebih lanjut
-                                penderita :
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>
-                                <table width='94%' class='table-hover' border='0' align='center' cellpadding='5'
-                                       cellspacing='5'>
-                                    <tr>
-                                        <td width='29%' valign='top'>Tanggal Rawat</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratrujuk["tgl_registrasi"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>Nama Pasien</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratrujuk["nm_pasien"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>No.RM</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratrujuk["no_rkm_medis"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>Alamat</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratrujuk["alamat"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>Diagnosa</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%'
-                                            valign='top'><?= $rsquerysuratrujuk["keterangan_diagnosa"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>Tindakan</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= (getOne("select count(no_rawat) from
+        <div class='card card-body'>
+            <table width='100%' class='table-hover' border='0' align='center' cellpadding='5' cellspacing='5'>
+                <tr>
+                    <td width='100%' valign='top' align='right'><?= $_SESSION["kabupaten"]; ?>
+                        , <?= $rsquerysuratrujuk["tgl_rujuk"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>Kepada
+                        Yth.<br /><?= $rsquerysuratrujuk["rujuk_ke"]; ?><br />Di
+                        Tempat
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='right'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>Bersama ini kami beritahukan bahwa kami telah
+                        merawat / memeriksa pasien berikut ini. Mohon pemeriksaan dan penanganan lebih lanjut
+                        penderita :
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='right'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='right'>
+                        <table width='94%' class='table-hover' border='0' align='center' cellpadding='5'
+                            cellspacing='5'>
+                            <tr>
+                                <td width='29%' valign='top'>Tanggal Rawat</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratrujuk["tgl_registrasi"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>Nama Pasien</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratrujuk["nm_pasien"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>No.RM</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratrujuk["no_rkm_medis"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>Alamat</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratrujuk["alamat"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>Diagnosa</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%'
+                                    valign='top'><?= $rsquerysuratrujuk["keterangan_diagnosa"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>Tindakan</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= (getOne("select count(no_rawat) from
                                             rawat_inap_dr where no_rawat='" . $rsquerysuratrujuk["no_rawat"] . "'") > 0 ? "rawat
                                             inap, " : "") . (getOne("select count(no_rawat) from periksa_lab where
                                             no_rawat='" . $rsquerysuratrujuk["no_rawat"] . "'") > 0 ? "pemeriksaan laboratorium,
@@ -102,72 +100,62 @@ if (isset($nosurat["nosurat"])) {
                                             no_rawat='" . $rsquerysuratrujuk["no_rawat"] . "'") > 0 ? "pemeriksaan radiologi,
                                             " : "") . (getOne("select count(no_rawat) from operasi where
                                             no_rawat='" . $rsquerysuratrujuk["no_rawat"] . "'") > 0 ? "operasi, " : "") ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>Terapi</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $obat; ?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>Demikianlah riwayat perawatan selama di
-                                <?= $_SESSION["nama_instansi"]; ?> dengan diagnosa akhir
-                                <?= $rsquerysuratrujuk["keterangan_diagnosa"]; ?>. Atas kerjasamanya kami ucapkan terima
-                                kasih
-                            </td>
-                        </tr>
-                    </table>
-                    <table width='100%' class='table-hover' border='0' align='center' cellpadding='5' cellspacing='5'
-                           class='tbl_form'>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='50%' align='center'></td>
-                            <td width='50%' align='center'><?= $_SESSION["nama_instansi"]; ?>,<br/>Dokter yang
-                                merawat<br/><img src='pages/<?= $PNG_WEB_DIR . basename($filename); ?>'/><br/>(
-                                <u><?= $rsquerysuratrujuk["nm_dokter"]; ?></u>
-                                )
-                            </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <center><a href='index.php?act=SuratRujuk&hal=Surat' class='btn btn-danger waves-effect'>Kembali</a>
-                    </center>
-                </div>
-            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>Terapi</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $obat; ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='right'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>Demikianlah riwayat perawatan selama di
+                        <?= $_SESSION["nama_instansi"]; ?> dengan diagnosa akhir
+                        <?= $rsquerysuratrujuk["keterangan_diagnosa"]; ?>. Atas kerjasamanya kami ucapkan terima
+                        kasih
+                    </td>
+                </tr>
+            </table>
+            <table width='100%' class='table-hover' border='0' align='center' cellpadding='5' cellspacing='5'
+                class='tbl_form'>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='50%' align='center'></td>
+                    <td width='50%' align='center'><?= $_SESSION["nama_instansi"]; ?>,<br />Dokter yang
+                        merawat<br /><img src='pages/<?= $PNG_WEB_DIR . basename($filename); ?>' /><br />(
+                        <u><?= $rsquerysuratrujuk["nm_dokter"]; ?></u>
+                        )
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <center><a href='index.php?act=SuratRujuk&hal=Surat' class='btn btn-danger waves-effect'>Kembali</a>
+            </center>
         </div>
     <?php } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RUJUK</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body text-center'>
-                    <p>Maaf surat tidak ditemukan</p>
-                </div>
-            </div>
+        <div class='card card-body text-center'>
+            <p>Maaf surat tidak ditemukan</p>
         </div>
-        <?php JSRedirect2("index.php?act=SuratRujuk", 7);
+    <?php JSRedirect2("index.php?act=SuratRujuk", 7);
     }
 } else { ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RUJUK</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body text-center'>
-                <p>Maaf surat tidak ditemukan</p>
-            </div>
-        </div>
+    <div class='card card-body text-center'>
+        <p>Maaf surat tidak ditemukan</p>
     </div>
-    <?php
+<?php
     JSRedirect2("index.php?act=SuratRujuk", 4);
 }
 ?>

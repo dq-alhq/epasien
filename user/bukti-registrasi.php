@@ -20,106 +20,96 @@ if (isset($json["kd_dokter"])) {
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>BUKTI REGISTRASI PENDAFTARAN</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-12'>
-                <div class='card card-body'>
-                    <div class='table-responsive table-bordered'>
-                        <table class='table table-hover'>
-                            <tr>
-                                <td width='30%'>Tanggal</td>
-                                <td width='70%'> : <?= $rsqueryregistrasi["tgl_registrasi"]; ?>
-                                    , <?= $rsqueryregistrasi["jam_reg"]; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>No. Rawat</td>
-                                <td> : <?= $rsqueryregistrasi["no_rawat"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>No. Antri Poli</td>
-                                <td> : <?= $rsqueryregistrasi["no_reg"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Nama</td>
-                                <td> : <?= $rsqueryregistrasi["nm_pasien"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>No. RM</td>
-                                <td> : <?= $rsqueryregistrasi["no_rkm_medis"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Jenis Kelamin</td>
-                                <td> : <?= ($rsqueryregistrasi["jk"] == "L" ? "Laki-Laki" : "Perempuan") ?></td>
-                            </tr>
-                            <tr>
-                                <td>Umur</td>
-                                <td> : <?= $rsqueryregistrasi["umur"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>No.HP/Telp</td>
-                                <td> : <?= $rsqueryregistrasi["no_tlp"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Penanggung Jawab</td>
-                                <td> : <?= $rsqueryregistrasi["p_jawab"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Alamat P.J.</td>
-                                <td> : <?= $rsqueryregistrasi["almt_pj"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Jenis Bayar</td>
-                                <td> : <?= $rsqueryregistrasi["png_jawab"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Ruang/Unit/Poli</td>
-                                <td> : <?= $rsqueryregistrasi["nm_poli"]; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Dokter</td>
-                                <td> : <?= $rsqueryregistrasi["nm_dokter"]; ?></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <center><a href='index.php?act=BookingRegistrasi&hal=Booking'
-                               class='btn btn-danger btn-transition'>Kembali</a></center>
-                </div>
+        <div class='card card-body'>
+            <div class='table-responsive table-bordered'>
+                <table class='table table-hover'>
+                    <tr>
+                        <td width='30%'>Tanggal</td>
+                        <td width='70%'> : <?= $rsqueryregistrasi["tgl_registrasi"]; ?>
+                            , <?= $rsqueryregistrasi["jam_reg"]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>No. Rawat</td>
+                        <td> : <?= $rsqueryregistrasi["no_rawat"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>No. Antri Poli</td>
+                        <td> : <?= $rsqueryregistrasi["no_reg"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Nama</td>
+                        <td> : <?= $rsqueryregistrasi["nm_pasien"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>No. RM</td>
+                        <td> : <?= $rsqueryregistrasi["no_rkm_medis"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td> : <?= ($rsqueryregistrasi["jk"] == "L" ? "Laki-Laki" : "Perempuan") ?></td>
+                    </tr>
+                    <tr>
+                        <td>Umur</td>
+                        <td> : <?= $rsqueryregistrasi["umur"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>No.HP/Telp</td>
+                        <td> : <?= $rsqueryregistrasi["no_tlp"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Penanggung Jawab</td>
+                        <td> : <?= $rsqueryregistrasi["p_jawab"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat P.J.</td>
+                        <td> : <?= $rsqueryregistrasi["almt_pj"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Bayar</td>
+                        <td> : <?= $rsqueryregistrasi["png_jawab"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Ruang/Unit/Poli</td>
+                        <td> : <?= $rsqueryregistrasi["nm_poli"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Dokter</td>
+                        <td> : <?= $rsqueryregistrasi["nm_dokter"]; ?></td>
+                    </tr>
+                </table>
             </div>
+            <center><a href='index.php?act=BookingRegistrasi&hal=Booking'
+                    class='btn btn-danger btn-transition'>Kembali</a></center>
         </div>
-        <?php
+        </div>
+        </div>
+    <?php
     } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>BUKTI PENDAFTARAN</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-12'>
-                <div class='card card-body text-center'>
-                    <p>Kami tidak menemukan data pendaftaran Anda, kemungkinan ada perubahan pada data
-                        pendaftaran Anda
-                    </p>
-                    <br/>
-                    <a href='index.php?act=BookingRegistrasi'
-                       class='btn btn-danger btn-transition'>Kembali</a>
-                </div>
-            </div>
+        <div class='card card-body text-center'>
+            <p>Kami tidak menemukan data pendaftaran Anda, kemungkinan ada perubahan pada data
+                pendaftaran Anda
+            </p>
+            <br />
+            <a href='index.php?act=BookingRegistrasi'
+                class='btn btn-danger btn-transition'>Kembali</a>
         </div>
-        <?php
+    <?php
         JSRedirect2("index.php?act=BookingRegistrasi", 10);
     }
 } else { ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-1"><strong>BUKTI PENDAFTARAN</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-12'>
-            <div class='card card-body text-center'>
-                <p>Kami tidak menemukan data pendaftaran anda</p>
-                <br/>
-                <a href='index.php?act=BookingRegistrasi' class='btn btn-danger btn-transition'>Kembali</a>
-            </div>
-        </div>
+    <div class='card card-body text-center'>
+        <p>Kami tidak menemukan data pendaftaran anda</p>
+        <br />
+        <a href='index.php?act=BookingRegistrasi' class='btn btn-danger btn-transition'>Kembali</a>
     </div>
-    <?php
+<?php
     JSRedirect2("index.php?act=BookingRegistrasi", 5);
 }
 

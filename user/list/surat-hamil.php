@@ -21,106 +21,94 @@ if (isset($nosurat["nosurat"])) {
         $errorCorrectionLevel = 'L';
         $matrixPointSize = 4;
         QRcode::png(getOne3("select ifnull(sha1(sidikjari.sidikjari),'" . $rsquerysurathamil["kd_dokter"] . "') from sidikjari inner join pegawai on pegawai.id=sidikjari.id where pegawai.nik='" . $rsquerysurathamil["kd_dokter"] . "'", $rsquerysurathamil["kd_dokter"]), $filename, $errorCorrectionLevel, $matrixPointSize, 2);
-        ?>
+?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN HAMIL</strong></h5>
             <h6 class="menu-header-title mb-3">No. <?= $nosurat; ?></h6>
         </div>
-        <div class='row clearfix'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body'>
-                    Yang bertanda tangan di bawah ini <?= $rsquerysurathamil["nm_dokter"]; ?>, dokter
-                    di <?= $_SESSION["nama_instansi"]; ?> mengingat sumpah jabatan pada waktu menerima jabatannya,
-                    menerangkan bahwa :<br/><br/>
-                    <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'>
-                        <tr>
-                            <td width='30%' valign='top'>Nama Pasien</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td width='69%' valign='top'><?= $rsquerysurathamil["nm_pasien"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Umur</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["umur"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Pekerjaan</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["pekerjaan"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Instansi / Perusahaan</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["nama_perusahaan"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Alamat</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["alamat"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Diperiksa Tanggal</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["tanggalperiksa"]; ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Hasil Pemeriksaan</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysurathamil["hasilperiksa"]; ?></td>
-                        </tr>
-                    </table>
-                    <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
-                           cellspacing='5' class='tbl_form'>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='100%' align='justify' colspan='2'>Demikian surat keterangan ini dibuat dengan
-                                benar dan agar dapat digunakan sebagaimana mestinya.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='50%' align='center'></td>
-                            <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>
-                                , <?= $rsquerysurathamil["tanggalperiksa"]; ?><br/><?= $_SESSION["nama_instansi"]; ?>
-                                <br/>Dokter,<br/><img
-                                        src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>'/><br/>(
-                                <u><?= $rsquerysurathamil["nm_dokter"]; ?></u> )
-                            </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <center><a href='index.php?act=SuratHamil&hal=Surat'
-                               class='btn btn-danger btn-transition'>Kembali</a></center>
-                </div>
-            </div>
+        <div class='card card-body'>
+            Yang bertanda tangan di bawah ini <?= $rsquerysurathamil["nm_dokter"]; ?>, dokter
+            di <?= $_SESSION["nama_instansi"]; ?> mengingat sumpah jabatan pada waktu menerima jabatannya,
+            menerangkan bahwa :<br /><br />
+            <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'>
+                <tr>
+                    <td width='30%' valign='top'>Nama Pasien</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td width='69%' valign='top'><?= $rsquerysurathamil["nm_pasien"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Umur</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["umur"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Pekerjaan</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["pekerjaan"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Instansi / Perusahaan</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["nama_perusahaan"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Alamat</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["alamat"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Diperiksa Tanggal</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["tanggalperiksa"]; ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Hasil Pemeriksaan</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysurathamil["hasilperiksa"]; ?></td>
+                </tr>
+            </table>
+            <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
+                cellspacing='5' class='tbl_form'>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='100%' align='justify' colspan='2'>Demikian surat keterangan ini dibuat dengan
+                        benar dan agar dapat digunakan sebagaimana mestinya.
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='50%' align='center'></td>
+                    <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>
+                        , <?= $rsquerysurathamil["tanggalperiksa"]; ?><br /><?= $_SESSION["nama_instansi"]; ?>
+                        <br />Dokter,<br /><img
+                            src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>' /><br />(
+                        <u><?= $rsquerysurathamil["nm_dokter"]; ?></u> )
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <center><a href='index.php?act=SuratHamil&hal=Surat'
+                    class='btn btn-danger btn-transition'>Kembali</a></center>
         </div>
     <?php } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN HAMIL</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body text-center'>
-                    <p>Maaf surat tidak ditemukan</p>
-                </div>
-            </div>
+        <div class='card card-body text-center'>
+            <p>Maaf surat tidak ditemukan</p>
         </div>
-        <?php JSRedirect2("index.php?act=SuratHamil", 7);
+    <?php JSRedirect2("index.php?act=SuratHamil", 7);
     }
 } else { ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN HAMIL</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body text-center'>
-                <p>Maaf surat tidak ditemukan</p>
-            </div>
-        </div>
+    <div class='card card-body text-center'>
+        <p>Maaf surat tidak ditemukan</p>
     </div>
-    <?php JSRedirect2("index.php?act=SuratHamil", 4);
+<?php JSRedirect2("index.php?act=SuratHamil", 4);
 } ?>

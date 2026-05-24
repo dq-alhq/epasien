@@ -68,7 +68,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
 
     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <?php
-        $querydokter = bukaquery("select dokter.kd_dokter,dokter.nm_dokter as dokter,spesialis.nm_sps,dokter.no_ijn_praktek,pegawai.photo from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps inner join pegawai on dokter.kd_dokter=pegawai.nik where dokter.status='1' and dokter.kd_dokter<>'-' and dokter.no_ijn_praktek<>'-' and dokter.no_ijn_praktek<>'' and spesialis.nm_sps NOT LIKE '%Umum%' and spesialis.nm_sps<>'Perawat' order by spesialis.nm_sps limit 6");
+        $querydokter = bukaquery("SELECT dokter.kd_dokter,dokter.nm_dokter AS dokter, spesialis.nm_sps, dokter.no_ijn_praktek FROM dokter INNER JOIN spesialis ON dokter.kd_sps=spesialis.kd_sps WHERE dokter.status='1' AND dokter.kd_dokter<>'-' AND dokter.no_ijn_praktek<>'-' AND dokter.no_ijn_praktek<>'' AND spesialis.nm_sps NOT LIKE '%Umum%' AND spesialis.nm_sps<>'Perawat' ORDER BY spesialis.nm_sps LIMIT 6");
         while ($rsquerydokter = mysqli_fetch_array($querydokter)):
             $photoName = trim((string) $rsquerydokter["kd_dokter"]) . ".webp?v=4";
             $defaultPhoto = "assets/images/avatar.png";

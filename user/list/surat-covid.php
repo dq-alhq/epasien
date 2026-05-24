@@ -28,159 +28,147 @@ if (isset($nosurat["nosurat"])) {
         QRcode::png(getOne3("select ifnull(sha1(sidikjari.sidikjari),'" . $rsquerysuratcovid["kd_dokter"] . "') from sidikjari inner join pegawai on pegawai.id=sidikjari.id where pegawai.nik='" . $rsquerysuratcovid["kd_dokter"] . "'", $rsquerysuratcovid["kd_dokter"]), $filename, $errorCorrectionLevel, $matrixPointSize, 2);
         $filename2 = $PNG_TEMP_DIR . $rsquerysuratcovid["nip"] . '.png';
         QRcode::png(getOne3("select ifnull(sha1(sidikjari.sidikjari),'" . $rsquerysuratcovid["nip"] . "') from sidikjari inner join pegawai on pegawai.id=sidikjari.id where pegawai.nik='" . $rsquerysuratcovid["nip"] . "'", $rsquerysuratcovid["nip"]), $filename2, $errorCorrectionLevel, $matrixPointSize, 2);
-        ?>
+?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RAPID TEST</strong></h5>
             <h6 class="menu-header-title mb-3">No. <?= $nosurat; ?></h6>
         </div>
-        <div class='row clearfix'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body'>
-                    Saya yang bertanda tangan di bawah ini <br/>
-                    <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'>
-                        <tr>
-                            <td width='100%' colspan='3'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='27%' valign='top'>Nama</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_dokter"] ?></td>
-                        </tr>
-                        <tr>
-                            <td width='27%' valign='top'>Jabatan</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_sps"] ?></td>
-                        </tr>
-                        <tr>
-                            <td width='100%' colspan='3'>&nbsp;</td>
-                        </tr>
-                    </table>
-                    Menerangkan bahwa :<br/>
-                    <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'
-                           class='tbl_form'>
-                        <tr>
-                            <td width='100%' colspan='3'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='27%' valign='top'>Nama Pasien</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_pasien"] ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Tanggal Lahir</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysuratcovid["tanggallahir"] ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Jenis Kelamin</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysuratcovid["jk"] ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Pekerjaan</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysuratcovid["pekerjaan"] ?></td>
-                        </tr>
-                        <tr>
-                            <td valign='top'>Alamat</td>
-                            <td valign='top'>:&nbsp;</td>
-                            <td valign='top'><?= $rsquerysuratcovid["alamat"] ?></td>
-                        </tr>
-                        <tr>
-                            <td width='100%' colspan='3'>&nbsp;</td>
-                        </tr>
-                    </table>
-                    Dari hasil pemeriksaan Repid Test Anti SARS-Cov-19, saya menyatakan : <br/>
-                    <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'
-                           class='tbl_form'>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='50%'>-Rapid Test IgM SARS-Cov-19</td>
-                            <td width='50%'>: <?= $rsquerysuratcovid["igm"] ?></td>
-                        </tr>
-                        <tr>
-                            <td width='50%'>-Rapid Test IgG SARS-Cov-19</td>
-                            <td width='50%'>: <?= $rsquerysuratcovid["igg"] ?></td>
-                        </tr>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <?php if ($rsquerysuratcovid["sehat"] == "V") : ?>
-                            <tr>
-                                <td width='100%' colspan='2'>Keterangan : <b>Sehat Dan Tidak Ada Tanda Dan Gejala
-                                        Tertular Covid-19</b></td>
-                            </tr>
-                        <?php endif;
-                        if ($rsquerysuratcovid["tidaksehat"] == "V") : ?>
-                            <tr>
-                                <td width='100%' colspan='2'>Keterangan : <b>Tidak Sehat Dan Ada Tanda Dan Gejala
-                                        Tertular Covid-19</b></td>
-                            </tr>
-                        <?php endif; ?>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                    </table>
-                    <br>
-                    <p> Demikian surat keterangan ini dibuat sesuai dengan kondisi sebenarnya dan untuk dipergunakan
-                        sebagaimana mestinya. Hasil rapid test tersebut berlaku sejak
-                        tanggal <?= $rsquerysuratcovid["berlakumulai"] ?> sampai
-                        dengan <?= $rsquerysuratcovid["berlakuselsai"] ?>
-                    </p>
-                    <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
-                           cellspacing='5' class='tbl_form'>
-                        <tr>
-                            <td width='100%' colspan='2'>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td width='50%' align='center'></td>
-                            <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>
-                                , <?= $rsquerysuratcovid["berlakumulai"]; ?><br/></td>
-                        </tr>
-                        <tr>
-                            <td width='50%' align='center'>Dokter Penanggung Jawab,<br/><img
-                                        src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>'/>
-                                <br/>
-                                ( <u><?= $rsquerysuratcovid["nm_dokter"]; ?></u> )
-                            </td>
-                            <td width=' 50%' align='center'>Analis Laboratorium,<br/>
-                                <img src='pages/<?= $PNG_WEB_DIR . basename($filename2) ?>'/>
-                                <br/>
-                                ( <u><?= $rsquerysuratcovid["nama"] ?></u> )
-                            </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <center><a href=' index.php?act=SuratCovid&hal=Surat'
-                               class='btn btn-danger waves-effect'>Kembali</a></center>
-                </div>
-            </div>
+        <div class='card card-body'>
+            Saya yang bertanda tangan di bawah ini <br />
+            <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'>
+                <tr>
+                    <td width='100%' colspan='3'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='27%' valign='top'>Nama</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_dokter"] ?></td>
+                </tr>
+                <tr>
+                    <td width='27%' valign='top'>Jabatan</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_sps"] ?></td>
+                </tr>
+                <tr>
+                    <td width='100%' colspan='3'>&nbsp;</td>
+                </tr>
+            </table>
+            Menerangkan bahwa :<br />
+            <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'
+                class='tbl_form'>
+                <tr>
+                    <td width='100%' colspan='3'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='27%' valign='top'>Nama Pasien</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td width='72%' valign='top'><?= $rsquerysuratcovid["nm_pasien"] ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Tanggal Lahir</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysuratcovid["tanggallahir"] ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Jenis Kelamin</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysuratcovid["jk"] ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Pekerjaan</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysuratcovid["pekerjaan"] ?></td>
+                </tr>
+                <tr>
+                    <td valign='top'>Alamat</td>
+                    <td valign='top'>:&nbsp;</td>
+                    <td valign='top'><?= $rsquerysuratcovid["alamat"] ?></td>
+                </tr>
+                <tr>
+                    <td width='100%' colspan='3'>&nbsp;</td>
+                </tr>
+            </table>
+            Dari hasil pemeriksaan Repid Test Anti SARS-Cov-19, saya menyatakan : <br />
+            <table width='98%' class='table-hover' border='0' align='right' cellpadding='5' cellspacing='5'
+                class='tbl_form'>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='50%'>-Rapid Test IgM SARS-Cov-19</td>
+                    <td width='50%'>: <?= $rsquerysuratcovid["igm"] ?></td>
+                </tr>
+                <tr>
+                    <td width='50%'>-Rapid Test IgG SARS-Cov-19</td>
+                    <td width='50%'>: <?= $rsquerysuratcovid["igg"] ?></td>
+                </tr>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <?php if ($rsquerysuratcovid["sehat"] == "V") : ?>
+                    <tr>
+                        <td width='100%' colspan='2'>Keterangan : <b>Sehat Dan Tidak Ada Tanda Dan Gejala
+                                Tertular Covid-19</b></td>
+                    </tr>
+                <?php endif;
+                if ($rsquerysuratcovid["tidaksehat"] == "V") : ?>
+                    <tr>
+                        <td width='100%' colspan='2'>Keterangan : <b>Tidak Sehat Dan Ada Tanda Dan Gejala
+                                Tertular Covid-19</b></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+            </table>
+            <br>
+            <p> Demikian surat keterangan ini dibuat sesuai dengan kondisi sebenarnya dan untuk dipergunakan
+                sebagaimana mestinya. Hasil rapid test tersebut berlaku sejak
+                tanggal <?= $rsquerysuratcovid["berlakumulai"] ?> sampai
+                dengan <?= $rsquerysuratcovid["berlakuselsai"] ?>
+            </p>
+            <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
+                cellspacing='5' class='tbl_form'>
+                <tr>
+                    <td width='100%' colspan='2'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='50%' align='center'></td>
+                    <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>
+                        , <?= $rsquerysuratcovid["berlakumulai"]; ?><br /></td>
+                </tr>
+                <tr>
+                    <td width='50%' align='center'>Dokter Penanggung Jawab,<br /><img
+                            src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>' />
+                        <br />
+                        ( <u><?= $rsquerysuratcovid["nm_dokter"]; ?></u> )
+                    </td>
+                    <td width=' 50%' align='center'>Analis Laboratorium,<br />
+                        <img src='pages/<?= $PNG_WEB_DIR . basename($filename2) ?>' />
+                        <br />
+                        ( <u><?= $rsquerysuratcovid["nama"] ?></u> )
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <center><a href=' index.php?act=SuratCovid&hal=Surat'
+                    class='btn btn-danger waves-effect'>Kembali</a></center>
         </div>
     <?php } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RAPID TEST</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body text-center'>
-                    <p>Maaf surat tidak ditemukan</p>
-                </div>
-            </div>
+        <div class='card card-body text-center'>
+            <p>Maaf surat tidak ditemukan</p>
         </div>
-        <?php JSRedirect2("index.php?act=SuratCovid", 7);
+    <?php JSRedirect2("index.php?act=SuratCovid", 7);
     }
 } else { ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN RAPID TEST</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body text-center'>
-                <p>Maaf surat tidak ditemukan</p>
-            </div>
-        </div>
+    <div class='card card-body text-center'>
+        <p>Maaf surat tidak ditemukan</p>
     </div>
-    <?php JSRedirect2("index.php?act=SuratCovid", 4);
+<?php JSRedirect2("index.php?act=SuratCovid", 4);
 } ?>

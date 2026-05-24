@@ -47,7 +47,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-1" role="tabpanel">
                     <form id="form_validation"
-                        class="mb-6 flex flex-col gap-4 rounded-[24px] border border-slate-200 bg-slate-50/70 p-4 sm:flex-row sm:items-end"
+                        class="mb-6 flex flex-col gap-4 rounded-3xl border border-slate-200 bg-slate-50/70 p-4 sm:flex-row sm:items-end"
                         action="" method="POST">
                         <div class="w-full">
                             <label for="tgl_registrasi" class="dashboard-label">Tanggal Rencana Periksa</label>
@@ -180,11 +180,12 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                 <tbody>
                                     <?php
                                     $queryriwayat = bukaquery("
-                                        SELECT 
+                                        SELECT
                                             DATE_FORMAT(booking_registrasi.tanggal_booking, '%d-%m-%Y') AS tanggal_booking,
                                             booking_registrasi.no_rkm_medis,
                                             TIME_FORMAT(booking_registrasi.jam_booking, '%H:%i') AS jam_booking,
                                             DATE_FORMAT(booking_registrasi.tanggal_periksa, '%d-%m-%Y') AS tanggal_periksa,
+                                            booking_registrasi.tanggal_periksa AS tanggal_periksa_raw,
                                             booking_registrasi.kd_dokter,
                                             dokter.nm_dokter,
                                             booking_registrasi.kd_poli,
@@ -255,7 +256,7 @@ $tglKemarin = date("Y-m-d", strtotime("-1 day"));
                                             <?php if ($rsqueryriwayat["status"] == "Belum") { ?>
                                                 <td class='text-center'>
                                                     <a href="javascript:void(0)"
-                                                        data-href='?act=CekinRegistrasi&iyem=<?= encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryriwayat["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryriwayat["kd_poli"] . "\",\"tanggal\":\"" . $rsqueryriwayat["tanggal_periksa"] . "\",\"kd_pj\":\"" . $rsqueryriwayat["kd_pj"] . "\",\"no_reg\":\"" . $rsqueryriwayat["no_reg"] . "\",\"status\":\"batal\"}", "e"); ?>'
+                                                        data-href='?act=CekinRegistrasi&iyem=<?= encrypt_decrypt("{\"kd_dokter\":\"" . $rsqueryriwayat["kd_dokter"] . "\",\"kd_poli\":\"" . $rsqueryriwayat["kd_poli"] . "\",\"tanggal\":\"" . $rsqueryriwayat["tanggal_periksa_raw"] . "\",\"kd_pj\":\"" . $rsqueryriwayat["kd_pj"] . "\",\"no_reg\":\"" . $rsqueryriwayat["no_reg"] . "\",\"status\":\"batal\"}", "e"); ?>'
                                                         class='btn btn-danger btn-transition batalRegistrasi'>Batal</a>
                                                 </td>
                                             <?php } else if ($rsqueryriwayat["status"] == "Terdaftar") { ?>

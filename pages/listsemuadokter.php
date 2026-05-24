@@ -3,7 +3,7 @@ if (strpos($_SERVER['REQUEST_URI'], "pages")) {
     exit(header("Location:../index.php"));
 }
 
-$querysemuadokter = bukaquery("select dokter.kd_dokter,left(dokter.nm_dokter,40) as dokter,spesialis.nm_sps,dokter.no_ijn_praktek,pegawai.photo from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps inner join pegawai on dokter.kd_dokter=pegawai.nik where dokter.status='1' and dokter.kd_dokter<>'-' and dokter.no_ijn_praktek<>'-' and dokter.no_ijn_praktek<>''  and spesialis.nm_sps<>'Perawat'  order by spesialis.nm_sps,dokter.nm_dokter");
+$querysemuadokter = bukaquery("select dokter.kd_dokter,left(dokter.nm_dokter,40) as dokter,spesialis.nm_sps,dokter.no_ijn_praktek,pegawai.photo from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps inner join pegawai on dokter.kd_dokter=pegawai.nik where dokter.status='1' and dokter.kd_dokter<>'-' and dokter.no_ijn_praktek<>'-' and dokter.no_ijn_praktek<>''  and spesialis.nm_sps<>'Perawat' order by spesialis.nm_sps,dokter.nm_dokter");
 visitor_page_intro('Dokter', 'Seluruh Dokter Kami', 'Profil dokter disusun dalam kartu yang lebih modern agar informasi spesialis dan SIP lebih mudah ditelusuri.');
 visitor_section_open();
 

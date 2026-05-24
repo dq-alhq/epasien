@@ -21,167 +21,155 @@ if (isset($token["noantrian"])) {
         QRcode::png(getOne3("select ifnull(sha1(sidikjari.sidikjari),'" . $rsquerysuratkontrol["kd_dokter"] . "') from sidikjari inner join pegawai on pegawai.id=sidikjari.id where pegawai.nik='" . $rsquerysuratkontrol["kd_dokter"] . "'", $rsquerysuratkontrol["kd_dokter"]), $filename, $errorCorrectionLevel, $matrixPointSize, 2);
         QRcode::png($rsquerysuratkontrol["no_antrian"], $filename2, $errorCorrectionLevel, $matrixPointSize, 2);
 
-        ?>
+?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KETERANGAN</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body'>
-                    <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
-                           cellspacing='5'>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>
-                                <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
-                                       cellspacing='5' class='tbl_form'>
-                                    <tr>
-                                        <td width='29%' valign='top'>NO. SURAT</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratkontrol["no_antrian"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>NO. RM</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratkontrol["no_rkm_medis"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>DIAGNOSA</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratkontrol["diagnosa"]; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='29%' valign='top'>TERAPI</td>
-                                        <td width='1%' valign='top'>:&nbsp;</td>
-                                        <td width='70%' valign='top'><?= $rsquerysuratkontrol["terapi"]; ?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>
-                                Tanggal surat rujukan <?= $rsquerysuratkontrol["tanggal_rujukan"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>
-                                Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan :
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                1. <?= $rsquerysuratkontrol["alasan1"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                2. <?= $rsquerysuratkontrol["alasan2"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>
-                                Rencana tindak lanjut yang akan diberikan pada kunjungan berikutnya :
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                1. <?= $rsquerysuratkontrol["rtl1"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                2. <?= $rsquerysuratkontrol["rtl2"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='justify'>
-                                Surat keterangan ini digunakan untuk 1 (satu) kali kunjungan dengan diagnosa di atas
-                                pada :
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                Tanggal <?= $rsquerysuratkontrol["tanggal_datang"]; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                No. Antrian <?= getOne2("select no_reg from booking_registrasi where
+        <div class='card card-body'>
+            <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
+                cellspacing='5'>
+                <tr>
+                    <td width='100%' valign='top' align='right'>
+                        <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
+                            cellspacing='5' class='tbl_form'>
+                            <tr>
+                                <td width='29%' valign='top'>NO. SURAT</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratkontrol["no_antrian"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>NO. RM</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratkontrol["no_rkm_medis"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>DIAGNOSA</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratkontrol["diagnosa"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td width='29%' valign='top'>TERAPI</td>
+                                <td width='1%' valign='top'>:&nbsp;</td>
+                                <td width='70%' valign='top'><?= $rsquerysuratkontrol["terapi"]; ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>
+                        Tanggal surat rujukan <?= $rsquerysuratkontrol["tanggal_rujukan"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>
+                        Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan :
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        1. <?= $rsquerysuratkontrol["alasan1"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        2. <?= $rsquerysuratkontrol["alasan2"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>
+                        Rencana tindak lanjut yang akan diberikan pada kunjungan berikutnya :
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        1. <?= $rsquerysuratkontrol["rtl1"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        2. <?= $rsquerysuratkontrol["rtl2"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='justify'>
+                        Surat keterangan ini digunakan untuk 1 (satu) kali kunjungan dengan diagnosa di atas
+                        pada :
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        Tanggal <?= $rsquerysuratkontrol["tanggal_datang"]; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        No. Antrian <?= getOne2("select no_reg from booking_registrasi where
                                 kd_dokter='" . $rsquerysuratkontrol["kd_dokter"] . "' and
                                 tanggal_periksa='" . $rsquerysuratkontrol["tanggal_datang"] . "' and
                                 no_rkm_medis='" . $rsquerysuratkontrol["no_rkm_medis"] . "'") ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='left'>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width='100%' valign='top' align='right'>
-                                <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
-                                       cellspacing='5' class='tbl_form'>
-                                    <tr>
-                                        <td width='50%' align='center'><img
-                                                    src='pages/".$PNG_WEB_DIR.basename($filename2)."'/></td>
-                                        <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>,
-                                            <br>Dokter<br/><img
-                                                    src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>'/><br/>
-                                            <u><?= $rsquerysuratkontrol["nm_dokter"] ?></u>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <center><a href='index.php?act=SuratKontrol&hal=Surat'
-                               class='btn btn-danger btn-transition'>Kembali</a>
-                    </center>
-                </div>
-            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='left'>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width='100%' valign='top' align='right'>
+                        <table width='100%' class='table-hover' border='0' align='center' cellpadding='5'
+                            cellspacing='5' class='tbl_form'>
+                            <tr>
+                                <td width='50%' align='center'><img
+                                        src='pages/".$PNG_WEB_DIR.basename($filename2)."' /></td>
+                                <td width='50%' align='center'><?= $_SESSION["kabupaten"]; ?>,
+                                    <br>Dokter<br /><img
+                                        src='pages/<?= $PNG_WEB_DIR . basename($filename) ?>' /><br />
+                                    <u><?= $rsquerysuratkontrol["nm_dokter"] ?></u>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <center><a href='index.php?act=SuratKontrol&hal=Surat'
+                    class='btn btn-danger btn-transition'>Kembali</a>
+            </center>
         </div>
-        <?php
+    <?php
     } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-1"><strong>SURAT KONTROL</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body'>
-                    <center>Maaf surat tidak ditemukan</center>
-                </div>
-            </div>
+        <div class='card card-body'>
+            <center>Maaf surat tidak ditemukan</center>
         </div>
-        <?php JSRedirect2("index.php?act=SuratKontrol&hal=Surat", 7);
+    <?php JSRedirect2("index.php?act=SuratKontrol&hal=Surat", 7);
     }
 } else {
     ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-1"><strong>SURAT KONTROL</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body'>
-                <center>Maaf surat tidak ditemukan</center>
-            </div>
-        </div>
+    <div class='card card-body'>
+        <center>Maaf surat tidak ditemukan</center>
     </div>
-    <?php
+<?php
     JSRedirect2("index.php?act=SuratKontrol&hal=Surat", 4);
 }
 ?>

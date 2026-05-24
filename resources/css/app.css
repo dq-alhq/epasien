@@ -57,7 +57,7 @@
 }
 
 @utility card-body {
-  @apply p-6 lg:p-8;
+  @apply p-6 lg:p-8 space-y-4;
 }
 
 @utility body {
@@ -145,7 +145,7 @@
 }
 
 @utility table-responsive {
-  @apply overflow-x-auto rounded-[24px] border border-slate-200/80;
+  @apply overflow-x-auto rounded-3xl border border-slate-200/80;
 }
 
 @utility table-bordered {
@@ -422,10 +422,10 @@
   }
 
   body.app-user {
-    @apply bg-gradient-to-br from-nu-50 via-nu-100 to-white;
+    @apply bg-linear-to-br from-nu-50 via-nu-100 to-white;
   }
 
   body.app-guest {
-    @apply bg-gradient-to-br from-nu-50 via-nu-100 to-white;
+    @apply bg-linear-to-br from-nu-50 via-nu-100 to-white;
   }
 }

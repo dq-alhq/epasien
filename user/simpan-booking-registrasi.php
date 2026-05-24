@@ -1,6 +1,6 @@
 <?php
 if (strpos($_SERVER['REQUEST_URI'], "pages"))
-    exit(header("Location:../index.php", ));
+    exit(header("Location:../index.php",));
 
 function Proses(): void
 {
@@ -8,13 +8,9 @@ function Proses(): void
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-body">
-                    <p>Pasien sedang dalam masa perawatan di kamar inap..!!</p>
-                    <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                </div>
-            </div>
+        <div class="card card-body">
+            <p>Pasien sedang dalam masa perawatan di kamar inap..!!</p>
+            <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
         </div>
         <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
     } else {
@@ -46,92 +42,80 @@ function extracted(): void
                 <div class="text-center mb-3">
                     <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-body">
-                            <p>Kuota sudah terpenuhi</p>
-                            <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                        </div>
-                    </div>
+                <div class="card card-body">
+                    <p>Kuota sudah terpenuhi</p>
+                    <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
                 </div>
-                <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
+            <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
             } else { ?>
                 <div class="text-center mb-3">
                     <h5 class="menu-header-title mb-3"><strong>VERIFIKASI BOOKING</strong></h5>
                 </div>
                 <div class="grid gap-6">
                     <div class="dashboard-card">
-                            <form action="" id="formBookingRegistrasi" method="POST">
-                                <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
-                                    <label for="tgl_rencana_periksa" class="col-form-label">Tanggal Rencana
-                                        Periksa</label>
-                                    <div>
-                                        <input id="tgl_rencana_periksa" readonly class="form-control"
-                                            value="<?= konversiHari($hari); ?>, <?= $tglcari ?> <?= konversiBulan($blncari) ?> <?= $thncari ?>">
-                                    </div>
+                        <form action="" id="formBookingRegistrasi" method="POST">
+                            <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
+                                <label for="tgl_rencana_periksa" class="col-form-label">Tanggal Rencana
+                                    Periksa</label>
+                                <div>
+                                    <input id="tgl_rencana_periksa" readonly class="form-control"
+                                        value="<?= konversiHari($hari); ?>, <?= $tglcari ?> <?= konversiBulan($blncari) ?> <?= $thncari ?>">
                                 </div>
-                                <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
-                                    <label for="dokter_pilihan" class="col-form-label">Dokter
-                                        Pilihan</label>
-                                    <div>
-                                        <input id="dokter_pilihan" readonly class="form-control"
-                                            value="<?= getOne2("select nm_dokter from dokter where kd_dokter='$kd_dokter'"); ?>">
-                                    </div>
+                            </div>
+                            <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
+                                <label for="dokter_pilihan" class="col-form-label">Dokter
+                                    Pilihan</label>
+                                <div>
+                                    <input id="dokter_pilihan" readonly class="form-control"
+                                        value="<?= getOne2("select nm_dokter from dokter where kd_dokter='$kd_dokter'"); ?>">
                                 </div>
-                                <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
-                                    <label for="poli_dipilih" class="col-form-label">Poli/Unit
-                                        Pilihan</label>
-                                    <div>
-                                        <input id="poli_dipilih" readonly class="form-control"
-                                            value="<?= getOne2("select nm_poli from poliklinik where kd_poli='$kd_poli'"); ?>">
-                                    </div>
+                            </div>
+                            <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
+                                <label for="poli_dipilih" class="col-form-label">Poli/Unit
+                                    Pilihan</label>
+                                <div>
+                                    <input id="poli_dipilih" readonly class="form-control"
+                                        value="<?= getOne2("select nm_poli from poliklinik where kd_poli='$kd_poli'"); ?>">
                                 </div>
-                                <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
-                                    <label for="penjab" class="col-form-label">Pilihan Jenis Bayar</label>
-                                    <div>
-                                        <select id="penjab" name="penjab" class="form-control">
-                                            <option value="A02">Umum</option>
-                                            <option disabled value="BPJ">BPJS (Lewat Mobile JKN)</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="grid md:grid-cols-[200px_1fr] items-center gap-4 mb-3">
+                                <label for="penjab" class="col-form-label">Pilihan Jenis Bayar</label>
+                                <div>
+                                    <select id="penjab" name="penjab" class="form-control">
+                                        <option value="A02">Umum</option>
+                                        <option disabled value="BPJ">BPJS (Lewat Mobile JKN)</option>
+                                    </select>
                                 </div>
-                                <input type="hidden" name="kd_poli" value="<?= $kd_poli; ?>" />
-                                <input type="hidden" name="tanggal" value="<?= $tanggal; ?>" />
-                                <input type="hidden" name="kd_dokter" value="<?= $kd_dokter; ?>" />
-                                <button class="btn btn-primary mt-4" type="submit" id="BtnSimpan" name="BtnSimpan">
-                                    Sudah Benar
-                                </button>
-                                <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-secondary">Kembali</a>
-                            </form>
+                            </div>
+                            <input type="hidden" name="kd_poli" value="<?= $kd_poli; ?>" />
+                            <input type="hidden" name="tanggal" value="<?= $tanggal; ?>" />
+                            <input type="hidden" name="kd_dokter" value="<?= $kd_dokter; ?>" />
+                            <button class="btn btn-primary mt-4" type="submit" id="BtnSimpan" name="BtnSimpan">
+                                Sudah Benar
+                            </button>
+                            <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-secondary">Kembali</a>
+                        </form>
                     </div>
                 </div>
-                <?php
+            <?php
             }
         } else { ?>
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Batas booking 1 hari sebelum periksa</p>
-                        <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Batas booking 1 hari sebelum periksa</p>
+                <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
             </div>
-            <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
+        <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
         }
     } else { ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-body">
-                    <p>Kami tidak menemukan data booking anda</p>
-                    <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                </div>
-            </div>
+        <div class="card card-body">
+            <p>Kami tidak menemukan data booking anda</p>
+            <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
         </div>
         <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 5);
     }
@@ -169,26 +153,18 @@ if (isset($BtnSimpan)) {
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>PROSES BOOKING BERHASIL</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Anda dapat melakukan cekin 1 x 24 jam sebelum pemeriksaan. Silahkan buka riwayat booking
-                            untuk melakukan cekin</p>
-                        <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Anda dapat melakukan cekin 1 x 24 jam sebelum pemeriksaan. Silahkan buka riwayat booking
+                    untuk melakukan cekin</p>
+                <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
             </div>
         <?php } else { ?>
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Pendaftaran booking registrasi hanya diijinkan satu kali per tanggal pemeriksaan</p>
-                        <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Pendaftaran booking registrasi hanya diijinkan satu kali per tanggal pemeriksaan</p>
+                <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
             </div>
         <?php }
         JSRedirect2("?act=BookingRegistrasi&hal=Booking", 7);
@@ -196,13 +172,9 @@ if (isset($BtnSimpan)) {
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-body">
-                    <p>Semua field wajib diisi</p>
-                    <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                </div>
-            </div>
+        <div class="card card-body">
+            <p>Semua field wajib diisi</p>
+            <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
         </div>
         <?php JSRedirect2("?act=SimpanBookingRegistrasi", 5);
     }
@@ -213,16 +185,12 @@ if (isset($BtnSimpan)) {
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN BOOKING</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Maaf, No. RM Anda pada kunjungan sebelumnya memiliki tagihan yang belum di closing.\n
-                            Silahkan konfirmasi dengan pihak admin.. !!</p>
-                        <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Maaf, No. RM Anda pada kunjungan sebelumnya memiliki tagihan yang belum di closing.\n
+                    Silahkan konfirmasi dengan pihak admin.. !!</p>
+                <a href="?act=BookingRegistrasi&hal=Booking" class="btn btn-danger btn-transition">Kembali</a>
             </div>
-            <?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 9);
+<?php JSRedirect2("?act=BookingRegistrasi&hal=Booking", 9);
         } else {
             Proses();
         }
@@ -233,8 +201,8 @@ if (isset($BtnSimpan)) {
 ?>
 <script src="assets/plugin/sweetalert2.all.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#BtnSimpan').bind('click', function (e) {
+    $(document).ready(function() {
+        $('#BtnSimpan').bind('click', function(e) {
             e.preventDefault();
             $(this).attr('disabled', 'disabled');
             $(this).text('Proses Booking...');

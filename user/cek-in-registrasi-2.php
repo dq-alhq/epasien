@@ -16,37 +16,28 @@ if (isset($json["kd_dokter"])) {
     $interval = getOne2("select (TO_DAYS('$tanggal')-TO_DAYS('$sekarang'))");
     if ($status == "batal") {
         $update = Hapus2("booking_registrasi", "no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_periksa='$tanggal' and kd_dokter='$kd_dokter' and kd_poli='$kd_poli' and kd_pj='$kd_pj'");
-        if ($update) {
-            ?>
+        if ($update) { ?>
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>PEMBATALAN BOOKING BERHASIL</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Booking Registrasi anda telah berhasil dibatalkan</p>
-                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                           class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Booking Registrasi anda telah berhasil dibatalkan</p>
+                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                    class="btn btn-danger btn-transition">Kembali</a>
             </div>
-            <?php
+        <?php
             JSRedirect2("index.php?act=HomeUser&hal=Beranda", 7);
         } else {
-            ?>
+        ?>
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>PEMBATALAN BOOKING GAGAL</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Terjadi kesalahan, silahkan kontak admin</p>
-                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                           class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Terjadi kesalahan, silahkan kontak admin</p>
+                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                    class="btn btn-danger btn-transition">Kembali</a>
             </div>
-            <?php
+        <?php
             JSRedirect2("index.php?act=HomeUser&hal=Beranda", 4);
         }
     } else {
@@ -54,30 +45,22 @@ if (isset($json["kd_dokter"])) {
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Booking Anda sudah kadaluarsa</p>
-                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                           class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Booking Anda sudah kadaluarsa</p>
+                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                    class="btn btn-danger btn-transition">Kembali</a>
             </div>
-            <?php
+        <?php
             JSRedirect2("index.php?act=HomeUser&hal=Beranda", 5);
         } else if ($interval > 1) {
-            ?>
+        ?>
             <div class="text-center mb-3">
                 <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-body">
-                        <p>Cekin hanya bisa dilakukan 24 jam sebelum pemeriksaan</p>
-                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                           class="btn btn-danger btn-transition">Kembali</a>
-                    </div>
-                </div>
+            <div class="card card-body">
+                <p>Cekin hanya bisa dilakukan 24 jam sebelum pemeriksaan</p>
+                <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                    class="btn btn-danger btn-transition">Kembali</a>
             </div>
             <?php
             JSRedirect2("index.php?act=HomeUser&hal=Beranda", 7);
@@ -110,51 +93,39 @@ if (isset($json["kd_dokter"])) {
                     Ubah3("skdp_bpjs", "status='Sudah Periksa' where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_datang='$tanggal'");
                     Ubah3("booking_registrasi", "status='Terdaftar' where no_rkm_medis='" . cleankar(encrypt_decrypt($_SESSION["ses_pasien"], "d")) . "' and tanggal_periksa='$tanggal' and kd_dokter='$kd_dokter' and kd_poli='$kd_poli' and kd_pj='$kd_pj'");
 
-                    ?>
+            ?>
                     <div class="text-center mb-3">
                         <h5 class="menu-header-title mb-3"><strong>BERHASIL CHECK-IN</strong></h5>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card card-body">
-                                <p>Silahkan tunjukkan bukti registerasi/pendaftaran kepada petugas kami jika
-                                    dibutuhkan</p>
-                                <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                                   class="btn btn-danger btn-transition">Kembali</a>
-                            </div>
-                        </div>
+                    <div class="card card-body">
+                        <p>Silahkan tunjukkan bukti registerasi/pendaftaran kepada petugas kami jika
+                            dibutuhkan</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                            class="btn btn-danger btn-transition">Kembali</a>
                     </div>
-                    <?php
+                <?php
                     JSRedirect2("index.php?act=HomeUser&hal=Beranda", 7);
                 } else { ?>
                     <div class="text-center mb-3">
                         <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card card-body">
-                                <p>Terjadi kesalahan, silahkan kontak admin</p>
-                                <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                                   class="btn btn-danger btn-transition">Kembali</a>
-                            </div>
-                        </div>
+                    <div class="card card-body">
+                        <p>Terjadi kesalahan, silahkan kontak admin</p>
+                        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                            class="btn btn-danger btn-transition">Kembali</a>
                     </div>
-                    <?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 4);
+                <?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 4);
                 }
             } else { ?>
                 <div class="text-center mb-3">
                     <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-body">
-                            <p>Pasien tidak ditemukan</p>
-                            <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                               class="btn btn-danger btn-transition">Kembali</a>
-                        </div>
-                    </div>
+                <div class="card card-body">
+                    <p>Pasien tidak ditemukan</p>
+                    <a href="index.php?act=BookingRegistrasi&hal=Booking"
+                        class="btn btn-danger btn-transition">Kembali</a>
                 </div>
-                <?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 5);
+    <?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 5);
             }
         }
     }
@@ -162,14 +133,10 @@ if (isset($json["kd_dokter"])) {
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-3"><strong>GAGAL MELAKUKAN CEKIN</strong></h5>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-body">
-                <p>Kami tidak menemukan data booking anda</p>
-                <a href="index.php?act=BookingRegistrasi&hal=Booking"
-                   class="btn btn-danger btn-transition">Kembali</a>
-            </div>
-        </div>
+    <div class="card card-body">
+        <p>Kami tidak menemukan data booking anda</p>
+        <a href="index.php?act=BookingRegistrasi&hal=Booking"
+            class="btn btn-danger btn-transition">Kembali</a>
     </div>
-    <?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 5);
+<?php JSRedirect2("index.php?act=HomeUser&hal=Beranda", 5);
 } ?>

@@ -14,82 +14,71 @@ if (isset($norawat["norawat"])) {
             <h5 class="menu-header-title mb-1"><strong>BILLING PERAWATAN</strong></h5>
             <h6 class="menu-header-title mb-3">No. <?= $norawat; ?></h6>
         </div>
-        <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body'>
-                <div class='table-responsive table-bordered'>
-                    <table class='table table-hover'>
-                        <?php
-                        $z = 1;
-                        $total = 0;
-                        while ($rsquerybilling = mysqli_fetch_array($querybilling)) {
-                            if (($rsquerybilling["status"] != "Tagihan") && ($rsquerybilling["status"] != "TtlObat")) {
-                                $total = $total + $rsquerybilling["empat"];
-                                if ($z <= 6) { ?>
-                                    <tr>
-                                        <td><?= $rsquerybilling["no"]; ?></td>
-                                        <td colspan='4'><?= $rsquerybilling["nm_perawatan"]; ?></td>
-                                    </tr>
-                                    <?php
-                                } else { ?>
-                                    <tr>
-                                        <td><?= $rsquerybilling["no"]; ?></td>
-                                        <td><?= $rsquerybilling["nm_perawatan"]; ?></td>
-                                        <td align='right'><?= $rsquerybilling["pemisah"]; ?></td>
-                                        <td align='right'><?= $rsquerybilling["dua"]; ?></td>
-                                        <td align='right'>
-                                            <?= ($rsquerybilling["empat"] > 0 ? formatDuit($rsquerybilling["empat"]) : "") ?>
-                                        </td>
-                                    </tr>
-                                <?php }
-                                $z++;
-                            }
-                        } ?>
-                        <tr>
-                            <td><b>TOTAL BILLING</b></td>
-                            <td>:</td>
-                            <td align='right'></td>
-                            <td align='right'></td>
-                            <td align='right'><b><?= formatDuit($total); ?></b></td>
-                        </tr>
-                    </table>
-                </div>
-                <center><a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
-                           class='btn btn-danger btn-transition mt-3'>Kembali</a></center>
+        <div class='card card-body'>
+            <div class='table-responsive table-bordered'>
+                <table class='table table-hover'>
+                    <?php
+                    $z = 1;
+                    $total = 0;
+                    while ($rsquerybilling = mysqli_fetch_array($querybilling)) {
+                        if (($rsquerybilling["status"] != "Tagihan") && ($rsquerybilling["status"] != "TtlObat")) {
+                            $total = $total + $rsquerybilling["empat"];
+                            if ($z <= 6) { ?>
+                                <tr>
+                                    <td><?= $rsquerybilling["no"]; ?></td>
+                                    <td colspan='4'><?= $rsquerybilling["nm_perawatan"]; ?></td>
+                                </tr>
+                            <?php
+                            } else { ?>
+                                <tr>
+                                    <td><?= $rsquerybilling["no"]; ?></td>
+                                    <td><?= $rsquerybilling["nm_perawatan"]; ?></td>
+                                    <td align='right'><?= $rsquerybilling["pemisah"]; ?></td>
+                                    <td align='right'><?= $rsquerybilling["dua"]; ?></td>
+                                    <td align='right'>
+                                        <?= ($rsquerybilling["empat"] > 0 ? formatDuit($rsquerybilling["empat"]) : "") ?>
+                                    </td>
+                                </tr>
+                    <?php }
+                            $z++;
+                        }
+                    } ?>
+                    <tr>
+                        <td><b>TOTAL BILLING</b></td>
+                        <td>:</td>
+                        <td align='right'></td>
+                        <td align='right'></td>
+                        <td align='right'><b><?= formatDuit($total); ?></b></td>
+                    </tr>
+                </table>
             </div>
+            <center><a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
+                    class='btn btn-danger btn-transition mt-3'>Kembali</a></center>
         </div>
-        </div><?php
+    <?php
     } else {
-        ?>
+    ?>
         <div class="text-center mb-3">
             <h5 class="menu-header-title mb-3"><strong>BILLING PERAWATAN</strong></h5>
         </div>
-        <div class='row'>
-            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                <div class='card card-body text-center'>
-                    <p>
-                        Maaf billing perawatan dengan No.Rawat <?= $norawat; ?> belum keluar, masih menunggu dikeluarkan
-                        oleh kasir.
-                    </p>
-                    <a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
-                       class='btn btn-danger btn-transition'>Kembali</a>
-                </div>
-            </div>
+        <div class='card card-body text-center'>
+            <p>
+                Maaf billing perawatan dengan No.Rawat <?= $norawat; ?> belum keluar, masih menunggu dikeluarkan
+                oleh kasir.
+            </p>
+            <a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
+                class='btn btn-danger btn-transition'>Kembali</a>
         </div>
-        <?php JSRedirect2("?act=RiwayatPeriksa", 9);
+    <?php JSRedirect2("?act=RiwayatPeriksa", 9);
     }
 } else { ?>
     <div class="text-center mb-3">
         <h5 class="menu-header-title mb-3"><strong>BILLING PERAWATAN</strong></h5>
     </div>
-    <div class='row'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <div class='card card-body text-center'>
-                <p>Maaf billing perawatan tidak ditemukan</p>
-                <a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
-                   class='btn btn-danger btn-transition'>Kembali</a>
-            </div>
-        </div>
+    <div class='card card-body text-center'>
+        <p>Maaf billing perawatan tidak ditemukan</p>
+        <a href='?act=RiwayatPeriksa&hal=RiwayatPeriksa'
+            class='btn btn-danger btn-transition'>Kembali</a>
     </div>
-    <?php JSRedirect2("index.php?act=RiwayatPeriksa", 7);
+<?php JSRedirect2("index.php?act=RiwayatPeriksa", 7);
 } ?>
