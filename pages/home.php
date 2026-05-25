@@ -49,7 +49,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                     </div>
                 </div>
             </div>
-            <img src="assets/images/direktur-half.png" alt="Direktur" class="absolute shrink-0 bottom-0 w-48 drop-shadow-[0_0_15px_rgba(0,255,50,0.5)] h-auto right-0">
+            <img src="assets/images/direktur-half.webp" alt="Direktur" class="absolute shrink-0 bottom-0 w-48 drop-shadow-[0_0_15px_rgba(0,255,50,0.5)] h-auto right-0">
         </div>
     </div>
 
