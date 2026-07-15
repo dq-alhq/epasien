@@ -100,7 +100,7 @@
                         <h4 class="text-lg font-bold text-slate-900">Pengumuman</h4>
                         <div class="mt-4 text-sm leading-7 text-slate-600">
                             <?php
-                            $querypengumuman = bukaquery("select pegawai.nama,date_format(pengumuman_epasien.tanggal,'%d/%m/%Y') as tanggal,pengumuman_epasien.pengumuman from pengumuman_epasien inner join pegawai on pengumuman_epasien.nik=pegawai.nik order by pengumuman_epasien.tanggal desc limit 1");
+                            $querypengumuman = bukaquery("select pegawai.nama,date_format(pengumuman_epasien.tanggal,'%d-%m-%Y') as tanggal,pengumuman_epasien.pengumuman from pengumuman_epasien inner join pegawai on pengumuman_epasien.nik=pegawai.nik order by pengumuman_epasien.tanggal desc limit 3");
                             if ($pengumuman = mysqli_fetch_array($querypengumuman)): ?>
                                 <p class='text-slate-700'><?= e($pengumuman["pengumuman"]) ?></p>
                                 <hr class="my-3" />
