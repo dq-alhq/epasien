@@ -267,11 +267,11 @@
 }
 
 @utility app-guest {
-  &body .nav-link {
+  body .nav-link {
     @apply border-transparent bg-transparent font-medium hover:bg-white hover:text-nu-700;
   }
 
-  &body .nav-link.active {
+  body .nav-link.active {
     @apply bg-white text-nu-700 shadow-xs ring-1 ring-nu-100;
   }
 }

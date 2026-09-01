@@ -54,7 +54,8 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
     </div>
 
 </section>
-<section id="team" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+
+<!-- <section id="team" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
     <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
             <span class="text-xs font-semibold uppercase tracking-[0.28em] text-nu-700">Dokter Kami</span>
@@ -96,7 +97,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
             </article>
         <?php endwhile; ?>
     </div>
-</section>
+</section> -->
 
 <section id="news" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
     <div class="border-b border-slate-100 pb-6">
@@ -106,7 +107,7 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
             Temukan informasi jadwal dokter, hari praktek, atau poliklinik dengan cepat dan mudah.
         </p>
 
-        <form id="carikeyword" class="mt-6" onsubmit="return false;">
+        <form id="carikeyword" class="mt-6 flex gap-2 items-center" onsubmit="return false;">
             <div class="relative max-w-md">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                     <i class="fas fa-search h-4 w-4"></i>
@@ -114,6 +115,104 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                 <input name="keyword" type="text" placeholder="Ketik nama dokter atau poliklinik..." id="keyword"
                     class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-all"
                     maxlength="40" autocomplete="off">
+            </div>
+            <div class="relative w-full max-w-md" id="multiselect">
+                <button
+                    type="button"
+                    id="filterHari"
+                    class="w-full flex justify-start pr-11 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-all">
+                    <span id="selectedText">
+                        Filter Hari
+                    </span>
+                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
+                        <i class="fas fa-chevron-down h-4 w-4"></i>
+                    </div>
+                </button>
+
+                <!-- Dropdown -->
+                <div
+                    id="listHari"
+                    class="hidden absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+
+                    <!-- Actions -->
+                    <div class="flex justify-between px-3 py-2 border-b">
+                        <button
+                            type="button"
+                            id="selectAll"
+                            class="text-sm text-blue-600 hover:text-blue-800">
+                            Pilih Semua
+                        </button>
+
+                        <button
+                            type="button"
+                            id="clearAll"
+                            class="text-sm text-red-600 hover:text-red-800">
+                            Hapus Semua
+                        </button>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="max-h-60 overflow-y-auto p-2">
+
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="senin"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Senin</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="selasa"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Selasa</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="rabu"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Rabu</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="kamis"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Kamis</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="jumat"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Jumat</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="sabtu"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Sabtu</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="hari[]"
+                                value="minggu"
+                                class="option-checkbox w-4 h-4 text-blue-600 rounded">
+                            <span>Minggu</span>
+                        </label>
+
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -189,7 +288,16 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                     data-poli="<?= htmlspecialchars(strtolower($dokter['poli']), ENT_QUOTES, 'UTF-8') ?>"
                     data-dokter="<?= htmlspecialchars(strtolower($dokter['nama']), ENT_QUOTES, 'UTF-8') ?>"
                     data-hari-ini="<?= $dokter['jadwal_hari_ini'] ? '1' : '0' ?>"
+                    data-hari="<?= htmlspecialchars(
+                                    strtolower(implode(',', array_unique(array_map(
+                                        fn($sesi) => $sesi['hari'] === 'AKHAD' ? 'MINGGU' : $sesi['hari'],
+                                        $dokter['sesi']
+                                    )))),
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ) ?>"
                     <?= !$dokter['jadwal_hari_ini'] ? 'style="display: none;"' : '' ?>>
+
 
                     <div>
                         <div class="flex items-center gap-4">
@@ -208,12 +316,25 @@ $kodePpk = $_SESSION["kode_ppkkemenkes"] ?? '';
                         <div class="space-y-2.5">
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Waktu Praktik</span>
                             <?php foreach ($dokter['sesi'] as $sesi): ?>
-                                <div class="flex items-center justify-between text-sm bg-slate-50/70 p-2 rounded-xl border border-slate-100/50">
+                                <div
+                                    class="doctor-schedule flex items-center justify-between text-sm bg-slate-50/70 p-2 rounded-xl border border-slate-100/50"
+                                    data-hari="<?= htmlspecialchars(
+                                                    strtolower($sesi['hari'] === 'AKHAD' ? 'minggu' : $sesi['hari']),
+                                                    ENT_QUOTES,
+                                                    'UTF-8'
+                                                ) ?>">
                                     <span class="font-semibold text-slate-700 flex items-center gap-1.5">
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                        <?= htmlspecialchars($sesi['hari'], ENT_QUOTES, 'UTF-8') ?>
+                                        <?= htmlspecialchars(
+                                            $sesi['hari'] === 'AKHAD' ? 'MINGGU' : $sesi['hari'],
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        ) ?>
                                     </span>
-                                    <span class="text-xs font-medium text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200/60 shadow-xs"><?= $sesi['jam'] ?> WIB</span>
+
+                                    <span class="text-xs font-medium text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200/60 shadow-xs">
+                                        <?= $sesi['jam'] ?> WIB
+                                    </span>
                                 </div>
                             <?php endforeach; ?>
                         </div>

@@ -113,7 +113,7 @@
 
                             if (mysqli_num_rows($querypengumuman) > 0):
                                 while ($pengumuman = mysqli_fetch_array($querypengumuman)):
-                                    ?>
+                            ?>
                                     <div class="mb-4">
                                         <p class="text-slate-700">
                                             <?= e($pengumuman["pengumuman"]) ?>
@@ -214,47 +214,258 @@
         }
 
         $(document).ready(function() {
+
             const $searchInput = $('#keyword');
             const $doctorCards = $('.doctor-card');
             const $noDataCard = $('#noDataCard');
+
             let debounceTimer;
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | GET SELECTED DAYS
+            |--------------------------------------------------------------------------
+            */
+            function getSelectedDays() {
+                return $('.option-checkbox:checked')
+                    .map(function() {
+                        return $(this).val().toLowerCase();
+                    })
+                    .get();
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UPDATE SELECTED TEXT
+            |--------------------------------------------------------------------------
+            */
+            function updateSelected() {
+
+                const selected = [];
+
+                $('.option-checkbox:checked').each(function() {
+
+                    selected.push({
+                        value: $(this).val(),
+                        text: $(this)
+                            .closest('label')
+                            .find('span')
+                            .text()
+                            .trim()
+                    });
+
+                });
+
+
+                let buttonText = 'Filter Hari';
+
+                if (selected.length === 1) {
+
+                    buttonText = selected[0].text;
+
+                } else if (selected.length === 2) {
+
+                    buttonText = selected
+                        .map(item => item.text)
+                        .join(', ');
+
+                } else if (selected.length > 2 && selected.length < 7) {
+
+                    buttonText = `${selected.length} hari dipilih`;
+
+                } else if (selected.length === 7) {
+
+                    buttonText = 'Semua hari';
+
+                }
+
+
+                $('#selectedText')
+                    .text(buttonText)
+                    .toggleClass('text-slate-400', selected.length === 0)
+                    .toggleClass('text-slate-900', selected.length > 0);
+
+
+                filterCards($searchInput.val(), true);
+            }
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FILTER DOCTOR CARDS
+            |--------------------------------------------------------------------------
+            */
             function filterCards(keyword, immediate = false) {
+
                 const filter = keyword.toLowerCase().trim();
+                const selectedDays = getSelectedDays();
+
                 let hasVisibleCard = false;
 
                 $doctorCards.each(function() {
-                    const $card = $(this);
-                    const namaPoli = $card.data('poli') || '';
-                    const namaDokter = $card.data('dokter') || '';
-                    const hariIni = $card.data('hari-ini') === 1 || $card.data('hari-ini') === '1';
 
-                    let isMatch = false;
-                    if (filter === '') {
-                        isMatch = hariIni;
-                    } else {
-                        // Pencarian mencakup nama dokter dan nama poliklinik
-                        isMatch = namaPoli.includes(filter) || namaDokter.includes(filter);
+                    const $card = $(this);
+
+                    const namaPoli = String(
+                        $card.data('poli') || ''
+                    ).toLowerCase();
+
+                    const namaDokter = String(
+                        $card.data('dokter') || ''
+                    ).toLowerCase();
+
+                    const hariIni =
+                        $card.data('hari-ini') === 1 ||
+                        $card.data('hari-ini') === '1';
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | FILTER KEYWORD
+                    |--------------------------------------------------------------------------
+                    */
+                    let keywordMatch = true;
+
+                    if (filter !== '') {
+                        keywordMatch =
+                            namaPoli.includes(filter) ||
+                            namaDokter.includes(filter);
                     }
 
-                    // Animasi transisi tipis saat sembunyi/muncul
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | FILTER JADWAL DI DALAM CARD
+                    |--------------------------------------------------------------------------
+                    */
+
+                    let hasMatchingSchedule = false;
+
+
+                    $card.find('.doctor-schedule').each(function() {
+
+                        const $schedule = $(this);
+
+                        const scheduleDay = String(
+                            $schedule.data('hari') || ''
+                        ).toLowerCase();
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Tidak ada filter hari
+                        |--------------------------------------------------------------------------
+                        |
+                        | Semua jadwal ditampilkan.
+                        |
+                        */
+                        if (selectedDays.length === 0) {
+
+                            $schedule.show();
+
+                            hasMatchingSchedule = true;
+
+                            return;
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Ada filter hari
+                        |--------------------------------------------------------------------------
+                        |
+                        | Hanya jadwal dengan hari yang dipilih
+                        | yang ditampilkan.
+                        |
+                        */
+                        if (selectedDays.includes(scheduleDay)) {
+
+                            $schedule.show();
+
+                            hasMatchingSchedule = true;
+
+                        } else {
+
+                            $schedule.hide();
+
+                        }
+
+                    });
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TENTUKAN CARD DITAMPILKAN ATAU TIDAK
+                    |--------------------------------------------------------------------------
+                    */
+
+                    let dayMatch = true;
+
+
+                    if (selectedDays.length === 0) {
+
+                        /*
+                         * Default:
+                         * jika keyword kosong → hanya hari ini
+                         * jika keyword diisi → semua hari
+                         */
+                        dayMatch = filter === '' ?
+                            hariIni :
+                            true;
+
+                    } else {
+
+                        /*
+                         * Jika filter hari aktif,
+                         * card harus mempunyai jadwal pada hari tersebut.
+                         */
+                        dayMatch = hasMatchingSchedule;
+
+                    }
+
+
+                    const isMatch = keywordMatch && dayMatch;
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SHOW / HIDE CARD
+                    |--------------------------------------------------------------------------
+                    */
+
                     if (isMatch) {
+
                         if (immediate) {
                             $card.show();
                         } else {
-                            $card.fadeIn(150);
+                            $card.stop(true, true).fadeIn(150);
                         }
+
                         hasVisibleCard = true;
+
                     } else {
+
                         if (immediate) {
                             $card.hide();
                         } else {
-                            $card.fadeOut(100);
+                            $card.stop(true, true).fadeOut(100);
                         }
+
                     }
+
                 });
 
-                // Tampilkan feedback jika data yang dicari kosong
+
+                /*
+                |--------------------------------------------------------------------------
+                | NO DATA
+                |--------------------------------------------------------------------------
+                */
+
                 if (hasVisibleCard) {
                     $noDataCard.addClass('hidden');
                 } else {
@@ -262,17 +473,108 @@
                 }
             }
 
-            // Inisialisasi filter awal
-            filterCards($searchInput.val(), true);
 
-            // Debounce handler
+            /*
+            |--------------------------------------------------------------------------
+            | TOGGLE DROPDOWN
+            |--------------------------------------------------------------------------
+            */
+            $('#filterHari').on('click', function(e) {
+
+                e.stopPropagation();
+
+                $('#listHari').toggleClass('hidden');
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHECKBOX CHANGE
+            |--------------------------------------------------------------------------
+            */
+            $('.option-checkbox').on('change', function() {
+
+                updateSelected();
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | SELECT ALL
+            |--------------------------------------------------------------------------
+            */
+            $('#selectAll').on('click', function(e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('.option-checkbox').prop('checked', true);
+
+                updateSelected();
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CLEAR ALL
+            |--------------------------------------------------------------------------
+            */
+            $('#clearAll').on('click', function(e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('.option-checkbox').prop('checked', false);
+
+                updateSelected();
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CLICK OUTSIDE DROPDOWN
+            |--------------------------------------------------------------------------
+            */
+            $(document).on('click', function(e) {
+
+                if (!$(e.target).closest('#multiselect').length) {
+
+                    $('#listHari').addClass('hidden');
+
+                }
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | SEARCH KEYWORD
+            |--------------------------------------------------------------------------
+            */
             $searchInput.on('input', function() {
+
                 clearTimeout(debounceTimer);
 
                 debounceTimer = setTimeout(() => {
+
                     filterCards($(this).val());
-                }, 300); // Eksekusi pencarian 300ms setelah user berhenti mengetik
+
+                }, 100);
+
             });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | INITIAL STATE
+            |--------------------------------------------------------------------------
+            */
+            updateSelected();
+
         });
 
         // Lazy loading untuk gambar
